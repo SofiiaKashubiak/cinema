@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -53,8 +53,6 @@ userSchema.pre("save", async function(next){
     next();
 })
 
-
-userSchema.pre("")
 
 
 const User = mongoose.model('User', userSchema);

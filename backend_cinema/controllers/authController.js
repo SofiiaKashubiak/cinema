@@ -5,7 +5,7 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const bcrypt = require("bcrypt");
-// const email = require("../utils/email");
+const email = require("../utils/email");
 
 
 
