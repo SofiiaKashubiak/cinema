@@ -4,7 +4,8 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,'Please fill a valid email address']
+        match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,'Please fill a valid email address'],
+        unique: true
     },
     password: {
         type: String,
@@ -32,8 +33,29 @@ const userSchema = new mongoose.Schema({
         enum: ['ADMIN', 'EDITOR', 'USER'],
         required: true
     },
-    resetPassword: String
+    resetPassword: {
+        type: String,
+        select: false
+    }
 });
+
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
+
+userSchema.pre("save", async function(next){
+    if (!this.reservePassword) return next();
+
+    this.reservePassword = await bcrypt.hash(this.reservePassword, 12);
+    next();
+})
+
+
+userSchema.pre("")
+
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

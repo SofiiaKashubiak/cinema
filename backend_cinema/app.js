@@ -10,6 +10,7 @@ const errorHandler = require("./controllers/errorController");
 const cors = require("cors");
 const movieRouter = require("./routes/movieRouter");
 const cinemaRouter = require("./routes/cinemaRouter");
+const userRouter = require("./routes/userRouter");
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(cors());
 
 app.use("/movie", movieRouter);
 app.use("/cinema", cinemaRouter);
+app.use("/user", userRouter);
 
 app.use(errorHandler);
 

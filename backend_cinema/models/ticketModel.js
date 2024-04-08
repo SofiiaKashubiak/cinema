@@ -15,10 +15,6 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "Movie",
         required: true
-    },
-    price: {
-        type: Number,
-        required: true
     }
 });
 
