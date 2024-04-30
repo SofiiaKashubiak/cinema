@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+<headerComp/>
+
+  <main>
+    <RouterView/>
+  </main>
+
+<footerComp/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import footerComp from "@/components/pageComponents/footerComp";
+import headerComp from "@/components/pageComponents/headerComp";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    headerComp,
+    footerComp
   }
 }
 </script>
