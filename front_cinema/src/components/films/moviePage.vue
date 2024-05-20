@@ -7,7 +7,6 @@
         </div>
         Language {{ movie.language }}
         trailerLink {{ movie.trailerLink }}
-        Actors {{ movie.actors }}
         <div v-for="(actor, index) in movie.actors" :key="index">
             {{ actor }}
         </div>
@@ -18,7 +17,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import * as movieAPI from '@/services/movieAPI'
 
 export default {
     data () {
@@ -35,17 +34,15 @@ export default {
                 rating: 0,
                 description: '',
             },
+            response: [],
         };
     },
     methods: {
-        getMovie() {
-            axios.get("http://localhost:3000/movie/getMovie/" + this.$route.params.id)
-            .then(response => {
-                this.movie = response.data.data.movie;
-            })
-            .catch(error => {
-                alert(error)
-            });
+        async getMovie() {
+            this.response = await movieAPI.getMovie(this.$route.params.id);
+            if (this.response != null){
+                this.movie = this.response.movie;
+            }
         },
     },
     mounted() {

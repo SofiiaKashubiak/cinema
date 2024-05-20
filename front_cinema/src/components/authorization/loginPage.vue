@@ -8,8 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-const userUrl = "http://localhost:3000/user/";
+import * as userAPI from '@/services/userAPI'
 
 export default {
     data () {
@@ -17,20 +16,17 @@ export default {
             user: {
                 email: '',
                 password: '',
+                response: [],
             },
         };
     },
     methods: {
-        login() {
-            axios.post(userUrl + "login", this.user)
-            .then(response => {
-                const token = response.data.token;
-                document.cookie = `bearer=${token}`;
-                alert("Успішний вхід!");
-            })
-            .catch(error => {
-                alert(error)
-            });
+        async login() {
+            this.response = await userAPI.login(this.user)
+            if (this.response != null) {
+            localStorage.token = this.response.token;
+        }
+            this.$router.push('/');
         },
     },
 };

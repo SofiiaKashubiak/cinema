@@ -1,5 +1,4 @@
 <template>
-    <h1>Hello World</h1>
     <form @submit.prevent="createUser()">
         Ім'я<input type="name" v-model="user.firstName">
         Прізвище <input type="surname" v-model="user.lastName">
@@ -11,8 +10,7 @@
 </template>
 
 <script>
-import axios from "axios";
-const userUrl = "http://localhost:3000/user/";
+import * as userAPI from '@/services/userAPI'
 
 export default {
     data () {
@@ -28,13 +26,8 @@ export default {
     },
     methods: {
         createUser() {
-            axios.post(userUrl + "signup", this.user)
-            .then(
-                this.$router.push("/")
-            )
-            .catch(error => {
-                alert(error)
-            });
+            userAPI.registration(this.user);
+            this.$router.push("/");
         },
     },
 };

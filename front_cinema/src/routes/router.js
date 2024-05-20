@@ -4,7 +4,9 @@ import createMovie from '@/components/films/createMoviePage';
 import createSession from '@/components/films/movieSessionPage';
 import moviePage from '@/components/films/moviePage.vue';
 import loginPage from '@/components/authorization/loginPage.vue';
-import mainPage from '@/components/others/mainPage.vue'
+import mainPage from '@/components/others/mainPage.vue';
+import errorPage from '@/components/others/errorPage.vue';
+import userProfilePage from '@/components/others/userProfilePage.vue';
 
 const history = createWebHistory();
 const router = createRouter({
@@ -33,6 +35,14 @@ const router = createRouter({
         {
             path: '/',
             component: mainPage
+        },
+        {
+            path: '/error',
+            component: errorPage
+        },
+        {
+            path: '/profile',
+            component: userProfilePage
         }
     ]
 })
