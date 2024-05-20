@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
     sessionId: {
@@ -14,10 +14,6 @@ const ticketSchema = new mongoose.Schema({
     movieId: {
         type: mongoose.Schema.ObjectId,
         ref: "Movie",
-        required: true
-    },
-    price: {
-        type: Number,
         required: true
     }
 });
