@@ -11,6 +11,10 @@ const cors = require("cors");
 const movieRouter = require("./routes/movieRouter");
 const cinemaRouter = require("./routes/cinemaRouter");
 
+const sessionRouter = require("./routes/sessionRouter");
+const ticketRouter = require("./routes/ticketRouter");
+const userRouter = require("./routes/userRouter");
+
 
 const app = express();
 
@@ -25,6 +29,9 @@ app.use(cors());
 
 app.use("/movie", movieRouter);
 app.use("/cinema", cinemaRouter);
+app.use("/session", sessionRouter);
+app.use("/ticket", ticketRouter);
+app.use("/user", userRouter)
 
 app.use(errorHandler);
 
