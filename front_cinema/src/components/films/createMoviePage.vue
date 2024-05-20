@@ -29,8 +29,7 @@
 </template>
 
 <script>
-import axios from "axios";
-const movieUrl = "http://localhost:3000/movie/";
+import * as movieAPI from '@/services/movieAPI'
 
 export default {
     data () {
@@ -64,13 +63,8 @@ export default {
         this.movie.actors.splice(index, 1);
         },
         createMovie() {
-            axios.post(movieUrl + "createMovie", this.movie)
-            .then(
-                this.$router.push("/")
-            )
-            .catch(error => {
-                alert(error)
-            });
+            movieAPI.createMovie(this.movie);
+            this.$router.push("/");
         },
     },
 

@@ -20,9 +20,7 @@
 </template>
 
 <script>
-import axios from "axios";
-const movieUrl = "http://localhost:3000/movie/";
-const cinemaUrl = "http://localhost:3000/cinema/"
+import * as movieAPI from '@/services/movieAPI'
 
 export default {
     data () {
@@ -41,28 +39,13 @@ export default {
         };
     },
     methods: {
-        getMovies() {
-            axios.get(movieUrl + "/getAllMovies")
-            .then(response => {
-                this.movies = response.data.data.movies;
-            })
-            .catch(error => {
-                alert(error)
-            });
+        async getMovies() {
+            this.movies = await movieAPI.getAllMovies();
         },
-        getCinemas(){
-            axios.get(cinemaUrl + "/getAllCinemas")
-            .then(response => {
-                this.cinemas = response.data.data.cinemas;
-            })
-            .catch(error => {
-                alert(error)
-            });
-        }
+
     },
     mounted() {
        this.getMovies();
-       this.getCinemas();
     },
 };
 
