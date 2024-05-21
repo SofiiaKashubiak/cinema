@@ -11,6 +11,7 @@ exports.getAllCinemas = catchAsync(async (req, res, next) => {
         }
     });
 });
+
 exports.createCinema = catchAsync(async (req, res, next) => {
     const newCinema = await Cinema.create(req.body);
     res.status(201).json({

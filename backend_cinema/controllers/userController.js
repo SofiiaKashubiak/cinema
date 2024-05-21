@@ -1,5 +1,9 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
+const AppError = require("../utils/appError");
+const {promisify} = require("util");
+const jwt = require("jsonwebtoken");
+const Ticket = require("../models/ticketModel");
 
 exports.createUser = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
@@ -44,11 +48,6 @@ exports.changePassword = catchAsync(async (req, res, next) => {
         }
     });
 })
-const AppError = require("../utils/appError");
-const {promisify} = require("util");
-const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
-const Ticket = require("../models/ticketModel");
 
 
 exports.getUserByToken = catchAsync(async (req, res, next) => {
