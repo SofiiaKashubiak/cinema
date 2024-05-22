@@ -8,9 +8,11 @@ const mongo_sanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 const errorHandler = require("./controllers/errorController");
 const cors = require("cors");
-const movieRouter = require("./routes/movieRouter");
-const cinemaRouter = require("./routes/cinemaRouter");
-const userRouter = require("./routes/userRouter");
+const movieRouter = require("./routers/movieRouter");
+const cinemaRouter = require("./routers/cinemaRouter");
+const userRouter = require("./routers/userRouter");
+const sessionRouter = require("./routers/sessionRouter");
+const ticketRouter = require("./routers/ticketRouter");
 
 
 const app = express();
@@ -18,7 +20,7 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(mongo_sanitize());
 // app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -27,6 +29,9 @@ app.use(cors());
 app.use("/movie", movieRouter);
 app.use("/cinema", cinemaRouter);
 app.use("/user", userRouter);
+app.use("/session", sessionRouter);
+app.use("/ticket", ticketRouter);
+app.use("/user", userRouter)
 
 app.use(errorHandler);
 

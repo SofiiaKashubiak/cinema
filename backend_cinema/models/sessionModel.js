@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const sessionSchema = new mongoose.Schema({
     movieId: {
