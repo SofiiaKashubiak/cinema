@@ -64,11 +64,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
-    if (req.body.password && req.body.password.length >= 8){
-        user.password = req.body.password;
-        user.markModified("password");
-    }
-    else if (req.body.password && req.body.password.length < 8) return next(new AppError("Password must be at least 8 characters long", 400));
 
     user.markModified("name");
     await user.save();
