@@ -14,40 +14,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
         }
     });
 });
-exports.editUser = catchAsync(async (req, res, next) => {
-    const editUser = req.body;
-    const filter = {id: editUser.id};
-    const updates = {
-        $set: {
-            phoneNumber: editUser.phoneNumber,
-            firstName: editUser.firstName,
-            lastName: editUser.lastName
-        }
-    }
-    const result = await User.updateOne(filter, updates)
-    res.status(201).json({
-        status: 'success',
-        data: {
-            result
-        }
-    });
-})
-exports.changePassword = catchAsync(async (req, res, next) => {
-    const editUser = req.body;
-    const filter = {id: editUser.id};
-    const updates = {
-        $set: {
-            password: editUser.password,
-        }
-    }
-    const result = await User.updateOne(filter, updates)
-    res.status(201).json({
-        status: 'success',
-        data: {
-            result
-        }
-    });
-})
+
 
 
 exports.getUserByToken = catchAsync(async (req, res, next) => {
@@ -116,7 +83,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-    const user = User.findByIdAndDelete(req.params.id);
+    const token = req.params.token;
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    let user = await User.findByIdAndDelete(decoded.id);
     res.status(201).json({
         status: 'success',
         user

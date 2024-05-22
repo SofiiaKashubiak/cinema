@@ -11,7 +11,7 @@ exports.createSession = catchAsync(async (req, res, next) => {
     });
 });
 exports.deleteSession = catchAsync(async (req, res, next) => {
-    const deletedSession = await Session.deleteOne({id: req.params.id});
+    const deletedSession = await Session.deleteOne({id: req.body.id});
     res.status(201).json({
         status: 'success',
         data: {
