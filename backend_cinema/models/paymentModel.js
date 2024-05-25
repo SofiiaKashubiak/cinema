@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
 
-const cinemaSchema = new mongoose.Schema({
-    name: {
+const paymentSchema = new mongoose.Schema({
+    email: {
         type: String,
         required: true
     },
-    location: {
-        type: String,
+    ticketId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Ticket",
         required: true
     },
-    quantityRows: {
-        type: Number,
+    places: {
+        type: Map,
+        of: String,
         required: true
     },
-    quantityPlacesInRow: {
+    price: {
         type: Number,
         required: true
     }

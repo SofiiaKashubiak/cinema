@@ -25,8 +25,8 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
     if (!user || !session) return next(new AppError("User or session don't exist", 401));
 
     const stripeSession = await stripe.checkout.sessions.create({
-        success_url: 'http://localhost:3000/success',
-        cancel_url: 'http://localhost:3000/cancel',
+        success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/${CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel`,
         payment_method_types: ['card'],
         mode: 'payment',
         metadata: {
@@ -46,4 +46,9 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
             },
         ],
     });
+});
+
+
+exports.checkoutSuccess = catchAsync(async (req, res, next) => {
+    const session = Session.findById(req.params.sessionId)
 });
