@@ -35,7 +35,7 @@
       <a>Cinema Poster</a>
     </div>
     <div class="slider-text-3">
-      <a>. . . . . . . .</a>
+      <a>. . . . . . . . .</a>
     </div>
     </div>
     <div class="phone">
