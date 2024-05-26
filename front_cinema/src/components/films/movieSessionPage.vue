@@ -1,16 +1,16 @@
 <template>
-    <form @submit.prevent="createSession">
+    <form @submit.prevent="createSession" class="white-form">
         <select v-model="session.movieId" @change="validateMovieId" required>
             <option value="" disabled>Select a movie</option>
-            <option v-for="option in movies" :key="option.id" :value="option.id">
+            <option v-for="option in movies" :key="option._id" :value="option._id">
                 {{ option.title }}
             </option>
         </select>
 
         <select v-model="session.cinemaId" @change="validateCinemaId" required>
             <option value="" disabled>Select a cinema</option>
-            <option v-for="option in cinemas" :key="option.id" :value="option.id">
-                {{ option.title }}
+            <option v-for="option in cinemas" :key="option._id" :value="option._id">
+                {{ option.name }}
             </option>
         </select>
 
@@ -35,6 +35,8 @@
 
 <script>
 import * as movieAPI from '@/services/movieAPI';
+import * as cinemaAPI from '@/services/cinemaAPI';
+import * as sessionAPI from '@/services/sessionAPI';
 
 export default {
     data() {
@@ -60,6 +62,9 @@ export default {
         async getMovies() {
             this.movies = await movieAPI.getAllMovies();
         },
+        async getCinemas() {
+            this.cinemas = await cinemaAPI.getAllCinemas();
+        },
         validatePrice() {
             this.invalidPrice = this.session.price <= 0;
         },
@@ -81,12 +86,37 @@ export default {
             return !this.session.movieId || !this.session.cinemaId || !this.session.time || !this.session.date
         },
         async createSession() {
-                alert("Успіх")
+                sessionAPI.createSession(this.session);
                 this.$router.push("/");
         },
     },
-    // mounted() {
-    //     this.getMovies();
-    // },
+    mounted() {
+         this.getMovies();
+         this.getCinemas();
+    },
 };
 </script>
+
+
+<style scoped>
+.white-form {
+    color: white;
+}
+
+.white-form input,
+.white-form select,
+.white-form button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.white-form option {
+    background-color: black;
+    color: white;
+}
+
+.white-form div {
+    color: white;
+}
+</style>
