@@ -73,3 +73,19 @@ export async function updateUser(token, user){
     }
 }
 
+export async function createRecoveryPassword(email) {
+    try {
+        return await axios.post(userUrl + "createReservePassword", email).then(res => res.data);
+    } catch (error) {
+        console.error("Error creating password:", error);
+        await router.push("/error");
+    }
+}
+
+export async function loginViaRecovery(data) {
+    try {
+        return await axios.post(userUrl + "loginViaReservePassword", data).then(res => res.data);
+    } catch (error) {
+        console.error("Error logging in:", error);
+    }
+}

@@ -8,6 +8,7 @@ import mainPage from '@/components/others/mainPage.vue';
 import errorPage from '@/components/others/errorPage.vue';
 import userProfilePage from '@/components/others/userProfilePage.vue';
 import movieSession from '@/components/others/cinemaCreationPage.vue';
+import recoveryPass from '@/components/authorization/recoveryPassPage.vue';
 
 const history = createWebHistory();
 const router = createRouter({
@@ -49,6 +50,10 @@ const router = createRouter({
         {
             path: '/createCinema',
             component: movieSession
+        },
+        {
+            path: '/recovery',
+            component: recoveryPass
         }
     ]
 })
