@@ -21,7 +21,8 @@ export default {
                 email: '',
                 password: '',
             },
-            response: [],
+            responsePass: [],
+            responseRecPass: [],
             invalidEmail: false,
             invalidPassword: false,
             loginError: false,
@@ -31,7 +32,11 @@ export default {
         async login() {
             if (!this.invalidEmail && !this.invalidPassword) {
                 this.response = await userAPI.login(this.user);
+                this.responseRecPass = await userAPI.loginViaRecovery(this.user);
                 if (this.response != null) {
+                    localStorage.token = this.response.token;
+                    this.$router.push('/');
+                } else if (this.responseRecPass != null){
                     localStorage.token = this.response.token;
                     this.$router.push('/');
                 } else {
