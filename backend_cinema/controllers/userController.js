@@ -5,6 +5,8 @@ const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const Ticket = require("../models/ticketModel");
 
+
+
 exports.createUser = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
     res.status(201).json({

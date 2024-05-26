@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: 'USER'
     },
-    resetPassword: {
+    reservePassword: {
         type: String,
         select: false
     }
@@ -53,8 +53,7 @@ userSchema.pre("save", async function(next){
 
     this.reservePassword = await bcrypt.hash(this.reservePassword, 12);
     next();
-})
-
+});
 
 
 const User = mongoose.model('User', userSchema);

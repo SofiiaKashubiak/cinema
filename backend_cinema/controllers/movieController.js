@@ -3,16 +3,6 @@ const Movie = require("../models/movieModel");
 const mongoose = require('mongoose');
 
 
-exports.getMovies = catchAsync(async (req, res, next) => {
-    const movies = await Movie.find();
-    res.status(200).json({
-        status: 'success',
-        data: {
-            movies
-        }
-    });
-});
-
 
 exports.getMovie = catchAsync(async (req, res, next) => {
     console.log(req.params.id);
@@ -21,6 +11,17 @@ exports.getMovie = catchAsync(async (req, res, next) => {
         status: 'success',
         data: {
             movie
+        }
+    });
+});
+
+
+exports.getMovies = catchAsync(async (req, res, next) => {
+    const movies = await Movie.find();
+    res.status(200).json({
+        status: 'success',
+        data: {
+            movies
         }
     });
 });
