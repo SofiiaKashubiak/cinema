@@ -20,7 +20,11 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "Movie",
         required: true
-    }
+    },
+    place: {
+        type: Number,
+        required: true
+    },
 });
 
 

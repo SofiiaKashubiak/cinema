@@ -5,10 +5,13 @@ const Movie = require("../models/movieModel");
 
 exports.getSession = catchAsync(async (req, res, next) => {
     const session = await Session.findById(req.params.id);
+    const tickets = await Ticket.find({sessionId: session._id});
+    const boughtPlaces = tickets.map(ticket => ticket.place);
     res.status(200).json({
         status: 'success',
         data: {
-            session
+            session,
+            boughtPlaces
         }
     });
 });

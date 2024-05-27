@@ -8,6 +8,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 exports.buyTicket = catchAsync(async (req, res, next) => {
+    const emailPlace = req.body.emailPlace;
+
     const session = Session.findById(req.params.sessionId)
         .populate({
             path: 'movieId',
@@ -18,11 +20,7 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
             select: 'name'
         });
 
-    const token = req.params.token;
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    let user = User.findById(decoded.id);
-
-    if (!user || !session) return next(new AppError("User or session don't exist", 401));
+    if (!session) return next(new AppError("Session don't exist", 401));
 
     const stripeSession = await stripe.checkout.sessions.create({
         success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/${CHECKOUT_SESSION_ID}`,
@@ -30,8 +28,9 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
         payment_method_types: ['card'],
         mode: 'payment',
         metadata: {
-            userId: user._id,
-            sessionId: session._id
+            sessionId: session._id,
+            emailPlace
+
         },
         line_items: [
             {
@@ -46,9 +45,22 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
             },
         ],
     });
+
+    res.status(200).json({
+        status: "success",
+        stripeSession
+    });
 });
 
 
 exports.checkoutSuccess = catchAsync(async (req, res, next) => {
-    const session = Session.findById(req.params.sessionId)
+    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    for (var email of Object.keys(session.metadata.emailPlace)) {
+        const ticket = await Ticket.create({
+            userId: item.userId,
+            sessionId: item.sessionId,
+            place: session.metadata.emailPlace[email],
+            email: email
+        });
+    }
 });
