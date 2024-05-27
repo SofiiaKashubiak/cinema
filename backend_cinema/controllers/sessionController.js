@@ -1,5 +1,6 @@
 const catchAsync = require("../utils/catchAsync");
 const Session = require("../models/sessionModel");
+const Movie = require("../models/movieModel");
 
 
 exports.getSession = catchAsync(async (req, res, next) => {
@@ -29,4 +30,21 @@ exports.deleteSession = catchAsync(async (req, res, next) => {
             deletedSession
         }
     });
+});
+
+exports.updateSession = catchAsync(async (req, res, next) => {
+    const session = await Session.findById(req.params.id);
+    session.movieId = req.body.movieId || session.movieId;
+    session.cinemaId = req.body.cinemaId || session.cinemaId;
+    session.date = req.body.date || session.date;
+    session.time = req.body.time || session.time;
+    session.price = req.body.price || session.price;
+    session.discount = req.body.discount || session.discount;
+    session.quantityAvailablePlaces = req.body.quantityAvailablePlaces || session.quantityAvailablePlaces;
+    await session.save();
+    res.status(201)
+        .json({
+            success: "success",
+            session
+        });
 });
