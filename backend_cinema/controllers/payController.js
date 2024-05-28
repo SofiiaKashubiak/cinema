@@ -1,8 +1,5 @@
 const catchAsync = require('../utils/catchAsync');
 const Session = require('../models/sessionModel');
-const {promisify} = require("util");
-const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -22,15 +19,30 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
 
     if (!session) return next(new AppError("Session don't exist", 401));
 
+    const payment = await Payment.create({
+        emailCustomer: req.body.email,
+        tickets: [],
+        totalPrice: (session.price - session.price * sessiond.discount / 100) * Object.values(emailPlace).length
+    });
+
+    for (var email of Object.keys(emailPlace)) {
+        await Ticket.create({
+            paymentId: payment._id,
+            movieId: session.movieId._id,
+            sessionId: session._id,
+            place: emailPlace[email],
+            email: email
+        });
+    }
+
     const stripeSession = await stripe.checkout.sessions.create({
         success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/${CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel`,
+        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel/${CHECKOUT_SESSION_ID}`,
         payment_method_types: ['card'],
         mode: 'payment',
         metadata: {
             sessionId: session._id,
-            emailPlace
-
+            paymentId: payment._id,
         },
         line_items: [
             {
@@ -41,7 +53,7 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
                     },
                     unit_amount: session.price - session.price * sessiond.discount / 100,
                 },
-                quantity: 1,
+                quantity: Object.values(emailPlace).length
             },
         ],
     });
@@ -55,12 +67,25 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
 
 exports.checkoutSuccess = catchAsync(async (req, res, next) => {
     const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
-    for (var email of Object.keys(session.metadata.emailPlace)) {
-        const ticket = await Ticket.create({
-            userId: item.userId,
-            sessionId: item.sessionId,
-            place: session.metadata.emailPlace[email],
-            email: email
-        });
-    }
+    const payment = await Payment.findById(session.metadata.paymentId);
+
+    payment.isPaid = true;
+    await payment.save();
+
+    res.status(200).json({
+        status: "success",
+        message: "Payment successful"
+    });
+});
+
+
+exports.checkoutCancel = catchAsync(async (req, res, next) => {
+    const payment = await Payment.findById(session.metadata.paymentId);
+    await Ticket.deleteMany({paymentId: payment._id});
+    await Payment.findByIdAndDelete(payment._id);
+
+    res.status(200).json({
+        status: "success",
+        message: "Payment canceled"
+    });
 });

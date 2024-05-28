@@ -1,23 +1,17 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-    email: {
+    emailCustomer: {
         type: String,
         required: true
     },
-    ticketId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Ticket",
-        required: true
-    },
-    places: {
-        type: Map,
-        of: String,
-        required: true
-    },
-    price: {
+    totalPrice: {
         type: Number,
         required: true
+    },
+    isPaid: {
+        type: Boolean,
+        default: false
     }
 });
 

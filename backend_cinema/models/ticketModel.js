@@ -6,6 +6,16 @@ const ticketSchema = new mongoose.Schema({
         ref: "Session",
         required: true
     },
+    movieId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Movie",
+        required: true
+    },
+    paymentId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Payment",
+        required: true
+    },
     email: {
         type: String,
         required: true,
@@ -16,15 +26,10 @@ const ticketSchema = new mongoose.Schema({
             message: props => `${props.value} is not a valid email!`
         }
     },
-    movieId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Movie",
-        required: true
-    },
     place: {
         type: Number,
         required: true
-    },
+    }
 });
 
 
