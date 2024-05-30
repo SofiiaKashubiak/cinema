@@ -12,7 +12,6 @@ const movieRouter = require("./routers/movieRouter");
 const cinemaRouter = require("./routers/cinemaRouter");
 const userRouter = require("./routers/userRouter");
 const sessionRouter = require("./routers/sessionRouter");
-const ticketRouter = require("./routers/ticketRouter");
 
 
 const app = express();
@@ -30,7 +29,6 @@ app.use("/movie", movieRouter);
 app.use("/cinema", cinemaRouter);
 app.use("/user", userRouter);
 app.use("/session", sessionRouter);
-app.use("/ticket", ticketRouter);
 
 app.use(errorHandler);
 
