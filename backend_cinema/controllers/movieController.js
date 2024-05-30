@@ -1,17 +1,10 @@
 const catchAsync = require("../utils/catchAsync");
 const Movie = require("../models/movieModel");
 const mongoose = require('mongoose');
+const {promisify} = require("util");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
-
-exports.getMovies = catchAsync(async (req, res, next) => {
-    const movies = await Movie.find();
-    res.status(200).json({
-        status: 'success',
-        data: {
-            movies
-        }
-    });
-});
 
 
 exports.getMovie = catchAsync(async (req, res, next) => {
@@ -26,6 +19,17 @@ exports.getMovie = catchAsync(async (req, res, next) => {
 });
 
 
+exports.getMovies = catchAsync(async (req, res, next) => {
+    const movies = await Movie.find();
+    res.status(200).json({
+        status: 'success',
+        data: {
+            movies
+        }
+    });
+});
+
+
 exports.createMovie = catchAsync(async (req, res, next) => {
     const newMovie = await Movie.create(req.body);
     res.status(201).json({
@@ -34,4 +38,24 @@ exports.createMovie = catchAsync(async (req, res, next) => {
             movie: newMovie
         }
     });
+});
+
+exports.updateMovie = catchAsync(async (req, res, next) => {
+    const movie = await Movie.findById(req.params.id);
+    movie.title = req.body.title || movie.title;
+    movie.year = req.body.year || movie.year;
+    movie.genres = req.body.genres || movie.genres;
+    movie.language = req.body.language || movie.language;
+    movie.trailerLink = req.body.trailerLink || movie.trailerLink;
+    movie.actors = req.body.actors || movie.actors;
+    movie.director = req.body.director || movie.director;
+    movie.duration = req.body.duration || movie.duration;
+    movie.rating = req.body.rating || movie.rating;
+    movie.description = req.body.description || movie.description;
+    await movie.save();
+    res.status(201)
+        .json({
+            success: "success",
+            movie
+        });
 });

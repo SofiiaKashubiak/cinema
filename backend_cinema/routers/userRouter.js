@@ -13,9 +13,8 @@ router
     .post("/loginViaReservePassword", authController.loginViaReservePassword)
     .post('/createReservePassword', authController.createReservePassword)
     .patch('/updateUser', userController.getTokenAsParameter, userController.updateUser)
-    .delete('/deleteUser', userController.deleteUser)
     .post("/createUser", userController.createUser)
-    .post("/editUser", userController.editUser)
-    .post("/newPassword", userController.changePassword);
+    .delete('/deleteUser', userController.getTokenAsParameter, userController.deleteUser);
+
 
 module.exports = router;

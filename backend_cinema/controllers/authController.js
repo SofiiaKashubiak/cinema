@@ -15,6 +15,7 @@ const signToken = id => {
     });
 }
 
+
 const createSendToken = (user) => {
     const token = signToken(user._id);
 
@@ -22,6 +23,7 @@ const createSendToken = (user) => {
 
     return token;
 };
+
 
 exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
@@ -33,6 +35,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         user: newUser
     });
 });
+
 
 exports.login = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
@@ -55,21 +58,22 @@ exports.login = catchAsync(async (req, res, next) => {
 
 
 
-
 exports.loginViaReservePassword = catchAsync(async (req, res, next) => {
     const { email, reservePassword } = req.body;
+    console.log(email, reservePassword)
 
     if (!email || !reservePassword) return next(new AppError('Please provide email and password!', 401));
 
-    const user = await User.findOne({ email }).select('+reservePassword');
+    const user = await User.findOne({ email : email }).select('+password +reservePassword');
 
     if (!user || !await bcrypt.compare(reservePassword, user.reservePassword)) return next(new AppError('Incorrect email or password', 401));
 
-    const token = createSendToken(user);
-
-    user.update({reservePassword: ""});
 
     user.reservePassword = undefined;
+    user.markModified("reservePassword");
+    await user.save()
+
+    const token = createSendToken(user);
 
     res.status(201).json({
         status: 'success',

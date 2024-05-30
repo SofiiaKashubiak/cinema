@@ -5,6 +5,8 @@ const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const Ticket = require("../models/ticketModel");
 
+
+
 exports.createUser = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
     res.status(201).json({
@@ -14,40 +16,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
         }
     });
 });
-exports.editUser = catchAsync(async (req, res, next) => {
-    const editUser = req.body;
-    const filter = {id: editUser.id};
-    const updates = {
-        $set: {
-            phoneNumber: editUser.phoneNumber,
-            firstName: editUser.firstName,
-            lastName: editUser.lastName
-        }
-    }
-    const result = await User.updateOne(filter, updates)
-    res.status(201).json({
-        status: 'success',
-        data: {
-            result
-        }
-    });
-})
-exports.changePassword = catchAsync(async (req, res, next) => {
-    const editUser = req.body;
-    const filter = {id: editUser.id};
-    const updates = {
-        $set: {
-            password: editUser.password,
-        }
-    }
-    const result = await User.updateOne(filter, updates)
-    res.status(201).json({
-        status: 'success',
-        data: {
-            result
-        }
-    });
-})
+
 
 
 exports.getUserByToken = catchAsync(async (req, res, next) => {
@@ -97,11 +66,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
-    if (req.body.password && req.body.password.length >= 8){
-        user.password = req.body.password;
-        user.markModified("password");
-    }
-    else if (req.body.password && req.body.password.length < 8) return next(new AppError("Password must be at least 8 characters long", 400));
 
     user.markModified("name");
     await user.save();
@@ -116,7 +80,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-    const user = User.findByIdAndDelete(req.params.id);
+    const token = req.params.token;
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    let user = await User.findByIdAndDelete(decoded.id);
     res.status(201).json({
         status: 'success',
         user

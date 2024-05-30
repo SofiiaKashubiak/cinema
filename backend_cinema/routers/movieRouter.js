@@ -6,7 +6,8 @@ const router = express.Router();
 router
     .get("/getAllMovies", movieController.getMovies)
     .get("/getMovie/:id", movieController.getMovie)
-    .post("/createMovie", movieController.createMovie);
+    .post("/createMovie", movieController.createMovie)
+    .patch("/updateMovie/:id", movieController.updateMovie);
 
 
 

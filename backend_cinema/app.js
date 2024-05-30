@@ -31,7 +31,6 @@ app.use("/cinema", cinemaRouter);
 app.use("/user", userRouter);
 app.use("/session", sessionRouter);
 app.use("/ticket", ticketRouter);
-app.use("/user", userRouter)
 
 app.use(errorHandler);
 

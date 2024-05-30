@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 
-const cinemaSchema = new mongoose.Schema({
-    name: {
+const paymentSchema = new mongoose.Schema({
+    emailCustomer: {
         type: String,
         required: true
     },
-    location: {
-        type: String,
-        required: true
-    },
-    quantityRows: {
+    totalPrice: {
         type: Number,
         required: true
     },
-    quantityPlacesInRow: {
-        type: Number,
-        required: true
+    isPaid: {
+        type: Boolean,
+        default: false
     }
 });
 
