@@ -4,7 +4,7 @@ var http = require('http');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: '../config.env' });
 
 const urlDB = process.env.MONGO_DB_URL;
 
