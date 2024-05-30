@@ -1,25 +1,47 @@
 <template>
-  <header>
-    <img src="@/assets/logo_header.png" class="logo-header">
-    <div class="logo-text-1">
-      <a>Cine</a>
+  <div>
+    <header>
+      <img src="@/assets/logo_header.png" class="logo-header">
+      <div class="logo-text-1">
+        <a>Cine</a>
+      </div>
+      <div class="logo-text-2">
+        <a>Virtuoso</a>
+      </div>
+      <div class="header-text-3">
+        <a href="/registration">Authentication</a>
+      </div>
+      <img src="@/assets/burger-bar.png" class="burger-bar" id="burger-bar"  @click="toggleSidebar">
+    </header>
+     <transition name="fade">
+      <div v-if="isSidebarOpen" class="dropdown-menu">
+        <button class="close-btn" @click="toggleSidebar">✖</button>
+        <ul>
+          <li><a href="/link1">Link 1</a></li>
+          <li><a href="/link2">Link 2</a></li>
+          <li><a href="/link3">Link 3</a></li>
+        </ul>
+      </div>
+    </transition>
     </div>
-    <div class="logo-text-2">
-      <a>Virtuoso</a>
-    </div>
-    <div class="header-text-3">
-      <a href="/registration">Authentication</a>
-    </div>
-    <img src="@/assets/burger-bar.png" class="burger-bar" id="burger-bar">
-  </header>
 </template>
 
 <script>
-
+export default {
+  data() {
+    return {
+      isSidebarOpen: false
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
+    }
+  }
+};
 </script>
+
 <style>
-
-
 .header-text-3 a {
   text-decoration: none;
   color: inherit;
@@ -82,4 +104,56 @@ header {
   width: 50px;
   height: 50px;
 }
+.dropdown-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px; /* Adjust width as needed */
+  height: 40vh;
+  background-color: white;
+  border-left: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding-top: 20px;
+  overflow-y: auto;
+}
+
+.dropdown-menu .close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding-top: 65px;
+  padding-left: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 20px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
+
