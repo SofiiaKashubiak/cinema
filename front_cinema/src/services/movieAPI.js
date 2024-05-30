@@ -29,3 +29,11 @@ export async function getAllMovies() {
         await router.push("/error");
     }
 }
+
+export const uploadPhoto = (formData) => {
+    return axios.post(userUrl + 'upload/photo', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
