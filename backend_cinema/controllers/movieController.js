@@ -52,6 +52,8 @@ exports.updateMovie = catchAsync(async (req, res, next) => {
     movie.duration = req.body.duration || movie.duration;
     movie.rating = req.body.rating || movie.rating;
     movie.description = req.body.description || movie.description;
+    movie.photoUrl = req.body.photoUrl || movie.photoUrl;
+    
     await movie.save();
     res.status(201)
         .json({

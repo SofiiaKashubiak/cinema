@@ -1,24 +1,24 @@
 <template>
   <div>
-<headerComp/>
+<!-- <headerComp/> -->
 
   <main>
     <RouterView/>
   </main>
 
-<footerComp/>
+<!-- <footerComp/> -->
   </div>
 </template>
 
 <script>
-import footerComp from "@/components/pageComponents/footerComp";
-import headerComp from "@/components/pageComponents/headerComp";
+// import footerComp from "@/components/pageComponents/footerComp";
+// import headerComp from "@/components/pageComponents/headerComp";
 
 export default {
   name: 'App',
   components: {
-    headerComp,
-    footerComp
+    // headerComp,
+    // footerComp
   }
 }
 </script>
