@@ -47,8 +47,14 @@
         Description
         <input type="text" v-model="movie.description" @input="isAnyFieldEmpty" required>
 
-        <button type="submit" :disabled="this.invalidYear || invalidActors || invalidGenres ||
-                   this.invalidDuration || this.invalidRating || this.isAnyFieldEmpty()">Let's Go</button>
+        Photo
+        <input type="file" @change="handleFileUpload" accept="image/*" required>
+        <div v-if="previewUrl">
+            <img :src="previewUrl" alt="Image Preview" style="max-width: 200px; max-height: 200px;" />
+        </div>
+
+        <button type="submit" :disabled="invalidYear || invalidActors || invalidGenres ||
+                   invalidDuration || invalidRating || isAnyFieldEmpty()">Let's Go</button>
         <div v-if="isAnyFieldEmpty()">Do not leave fields blank</div>
     </form>
 </template>
@@ -70,8 +76,10 @@ export default {
                 duration: 0,
                 rating: 0,
                 description: '',
+                photo: null,  
             },
             genreOption: ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mystery", "Thriller"],
+            previewUrl: null,  
             invalidYear: false,
             invalidGenres: false,
             invalidActors: false,
@@ -111,9 +119,21 @@ export default {
             return !this.movie.title || !this.movie.language || !this.movie.trailerLink || !this.movie.director || 
             !this.movie.description || this.movie.genres.length === 0 || this.movie.actors.length === 0;
         },
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            this.movie.photo = file;
+            this.previewUrl = URL.createObjectURL(file);
+        },
         async createMovie() {
-                await movieAPI.createMovie(this.movie);
-                this.$router.push("/");
+            if (this.selectedFile) {
+                const formData = new FormData();
+                formData.append('photo', this.selectedFile);
+                const response = await movieAPI.uploadPhoto(formData);
+                this.movie.photoUrl = response.data.url; 
+            }
+
+            await movieAPI.createMovie(this.movie);
+            this.$router.push("/");
         },
     },
 };
