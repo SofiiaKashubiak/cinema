@@ -9,11 +9,11 @@
         <a>Virtuoso</a>
       </div>
       <div class="header-text-3">
-        <a href="/registration">Authentication</a>
+        <a href="/">Home Page</a>
       </div>
       <img src="@/assets/burger-bar.png" class="burger-bar" id="burger-bar"  @click="toggleSidebar">
     </header>
-     <transition name="fade">
+    <transition name="fade">
       <div v-if="isSidebarOpen" class="dropdown-menu">
         <button class="close-btn" @click="toggleSidebar">✖</button>
         <ul>
@@ -23,7 +23,7 @@
         </ul>
       </div>
     </transition>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -47,6 +47,7 @@ export default {
   color: inherit;
 }
 header {
+  z-index: 10;
   position: absolute;
   width: 100%;
   top: 0;
@@ -89,7 +90,7 @@ header {
 .header-text-3 {
   position: absolute;
   top: 25px;
-  left: calc(100% - 334px);
+  left: calc(106% - 390px);
   font-family: Cormorant;
   font-size: 36px;
   font-weight: 600;
