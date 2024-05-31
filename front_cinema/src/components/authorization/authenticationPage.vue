@@ -27,18 +27,18 @@
             <div class="input-box-login">
               <input type="email" autocomplete="new-password" placeholder="Please enter email" id="email-login" v-model="user.email" @input="validateEmail">
               <label for="email-login" class="label-email-login">Email</label>
-              <div v-if="invalidEmailReg" class="error-message"> Please enter a valid email address</div>
+              <div v-if="invalidEmailReg" class="error-message-email-log"> Please enter a valid email address</div>
             </div>
             <div class="input-box-login">
               <input type="password" autocomplete="new-password" placeholder="Please enter password" id="password-login" v-model="user.password" @input="validatePassword">
               <label for="password-login" class="label-email-password">Password</label>
-              <div v-if="invalidPasswordReg" > Password should be at least 8 characters long</div>
+              <div v-if="invalidPasswordReg" class="error-message-password-log"> Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-login">
-              <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmailReg || invalidPassword || isAnyFieldEmptyLog()">
+              <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmailReg || invalidPasswordReg || isAnyFieldEmptyLog()">
                 <span>Sign In</span><i class="bx bx-arrow-back"></i>
               </button>
-              <div v-if="loginError">Такого користувача не існує, або пароль не вірний</div>
+              <div v-if="loginError" class="error-message-none-user-log">This user does not exist, or the password is incorrect</div>
             </div>
           </div>
           <div class="form-login-buttons-links">
@@ -76,27 +76,27 @@
             <div class="input-box-register">
               <input type="text" autocomplete="new-name" placeholder="Please enter name" id="name-register" v-model="user.firstName" @input="validateName">
               <label for="name-register" class="label-name-register">First Name</label>
-              <div v-if="invalidNameReg">Name can consist only of letters, '-' or ' '</div>
+              <div v-if="invalidNameReg" class="error-message-name-reg">Name can consist only of letters, '-' or ' '</div>
             </div>
             <div class="input-box-register">
               <input type="text" autocomplete="new-last-name" placeholder="Please enter surname" id="last-name-register" v-model="user.lastName" @input="validateLastName">
               <label for="last-name-register" class="label-last-name-register">Last Name</label>
-              <div v-if="invalidLastNameReg">Last name can consist only of letters, '-' or ' '</div>
+              <div v-if="invalidLastNameReg" class="error-message-last-name-reg">Last name can consist only of letters, '-' or ' '</div>
             </div>
             <div class="input-box-register">
               <input type="email" autocomplete="new-email-" placeholder="Please enter email" id="email-register" v-model="user.email" @input="validateEmail">
               <label for="name-register" class="label-email-register">Email</label>
-              <div v-if="invalidEmailReg">Please enter a valid email address</div>
+              <div v-if="invalidEmailReg" class="error-message-email-reg">Please enter a valid email address</div>
             </div>
             <div class="input-box-register">
               <input type="text" autocomplete="new-phone" placeholder="+##-####-####" id="phone-register" v-model="user.phoneNumber" v-mask="'+##-####-####'" @input="validatePhoneNumber">
               <label for="phone-register" class="label-phone-register">Phone Number</label>
-              <div v-if="invalidPhoneReg">Please enter a valid phone number +12-3456-7890</div>
+              <div v-if="invalidPhoneReg" class="error-message-phone-reg">Please enter a valid phone number +12-3456-7890</div>
             </div>
             <div class="input-box-register">
               <input type="password" autocomplete="new-password-" placeholder="Please enter password" id="password-register" v-model="user.password" @input="validatePassword">
               <label for="password-register" class="label-password-register">Password</label>
-              <div v-if="invalidPasswordReg">Password should be at least 8 characters long</div>
+              <div v-if="invalidPasswordReg" class="error-message-password-reg">Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-register">
               <button class="button-sign-up" type="submit" @click="createUser()" :disabled="invalidNameReg || invalidLastNameReg || invalidEmailReg || invalidPhoneReg || invalidPasswordReg || isAnyFieldEmptyReg()">
@@ -107,7 +107,7 @@
           <div class="form-register-buttons-links">
             <div class="sign-up">
               <a href="#" id="login-btn" @click.prevent="startAnimation"> Sign In</a>
-              <p v-if="loginError">Такого користувача не існує, або пароль не вірний</p>
+              <p v-if="loginError" class="error-message-password-reg">This user does not exist, or the password is incorrect</p>
             </div>
             <div class="forgot">
               <a href="/" id="register-btn"> Home Page</a>
@@ -129,7 +129,7 @@ export default {
     mask,
   },
   created() {
-    this.disableAutofill(); // Викликати функцію при створенні компоненту
+    this.disableAutofill();
   },
   data() {
     return {
@@ -166,7 +166,7 @@ export default {
       });
     },
     async login() {
-            if (!this.invalidEmail && !this.invalidPassword) {
+            if (!this.invalidEmail && !this.invalidPasswordReg) {
                 this.response = await userAPI.login(this.user);
                 this.responseRecPass = await userAPI.loginViaRecovery(this.user);
                 if (this.response != null) {
@@ -264,17 +264,7 @@ export default {
 </script>
 
 <style>
-.error-message {
-    position: absolute;
-    top: -5px;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 0, 0, 0.8);
-    color: white;
-    padding: 5px;
-    font-size: 12px;
-    text-align: center;
-  }
+
 .fluid-container {
   position: relative;
   width: 100%;
@@ -406,6 +396,17 @@ export default {
   top: 160px;
   left: 480px;
 }
+.error-message-email-log {
+  position: absolute;
+  top: 255px;
+  left:180px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+}
 .label-email-login{
   position: absolute;
   top: 149px;
@@ -462,6 +463,17 @@ export default {
   top: 310px;
   left: 480px;
 }
+.error-message-password-log {
+  position: absolute;
+  top: 405px;
+  left:180px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+}
 
 .label-email-password{
   position: absolute;
@@ -478,6 +490,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.error-message-none-user-log {
+  position: absolute;
+  top: 405px;
+  left:180px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
 }
 .button-sign-in{
   position: absolute;
@@ -559,6 +582,17 @@ export default {
   top: 100px;
   right: 400px;
 }
+.error-message-name-reg {
+  position: absolute;
+  top: 191px;
+  left:18px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 16x;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+}
 .label-name-register{
   position: absolute;
   top: 89px;
@@ -589,6 +623,17 @@ export default {
   top: 100px;
   right: 65px;
 }
+.error-message-last-name-reg {
+  position: absolute;
+  top: 191px;
+  left:353px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 16x;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+}
 .label-last-name-register{
   position: absolute;
   top: 89px;
@@ -618,6 +663,17 @@ export default {
   position: absolute;
   top: 230px;
   right: 400px;
+}
+.error-message-email-reg {
+  position: absolute;
+  top: 321px;
+  left:6px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 16x;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
 }
 .label-email-register{
   position: absolute;
@@ -650,6 +706,17 @@ export default {
   top: 230px;
   right: 65px;
 }
+.error-message-phone-reg {
+  position: absolute;
+  top: 321px;
+  left:353px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 16x;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+}
 .label-phone-register{
   position: absolute;
   top: 220px;
@@ -679,6 +746,17 @@ export default {
   position: absolute;
   top: 360px;
   right: 65px;
+}
+.error-message-password-reg {
+  position: absolute;
+  top: 451px;
+  left:160px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  font-size: 16x;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
 }
 .label-password-register{
   position: absolute;
