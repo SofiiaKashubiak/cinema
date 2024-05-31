@@ -27,12 +27,12 @@
             <div class="input-box-login">
               <input type="email" autocomplete="new-password" placeholder="Please enter email" id="email-login" v-model="user.email" @input="validateEmail">
               <label for="email-login" class="label-email-login">Email</label>
-              <div v-if="invalidEmail"> Please enter a valid email address</div>
+              <div v-if="invalidEmailReg"> Please enter a valid email address</div>
             </div>
             <div class="input-box-login">
               <input type="password" autocomplete="new-password" placeholder="Please enter password" id="password-login" v-model="user.password" @input="validatePassword">
               <label for="password-login" class="label-email-password">Password</label>
-              <div v-if="invalidPassword"> Password should be at least 8 characters long</div>
+              <div v-if="invalidPasswordReg"> Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-login">
               <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmailReg || invalidPassword || isAnyFieldEmptyLog()">
@@ -281,7 +281,7 @@ export default {
 .fluid-expanded .fluid-1 {
   transform: scale(5);
 }
-
+//Login Form Container
 .login-container,
 .register-container {
   transition: opacity 1.5s ease-in-out;
@@ -521,6 +521,7 @@ export default {
 .form-login-buttons-links .forgot a{
   color: inherit;
 }
+//CreateAccount
 .register-container{
   position: absolute;
   display: flex;
