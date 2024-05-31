@@ -35,7 +35,7 @@
               <div v-if="invalidPassword"> Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-login">
-              <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmail || invalidPassword || isAnyFieldEmpty()">
+              <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmailReg || invalidPassword || isAnyFieldEmptyLog()">
                 <span>Sign In</span><i class="bx bx-arrow-back"></i>
               </button>
               <div v-if="loginError">Такого користувача не існує, або пароль не вірний</div>
@@ -99,7 +99,7 @@
               <div v-if="invalidPasswordReg">Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-register">
-              <button class="button-sign-up" type="submit" @click="createUser()" :disabled="invalidNameReg || invalidLastNameReg || invalidEmailReg || invalidPhoneReg || invalidPasswordReg || isAnyFieldEmpty()">
+              <button class="button-sign-up" type="submit" @click="createUser()" :disabled="invalidNameReg || invalidLastNameReg || invalidEmailReg || invalidPhoneReg || invalidPasswordReg || isAnyFieldEmptyReg()">
                 <span>Sign Up</span><i class="bx bx-arrow-back"></i>
               </button>
             </div>
@@ -107,6 +107,7 @@
           <div class="form-register-buttons-links">
             <div class="sign-up">
               <a href="#" id="login-btn" @click.prevent="startAnimation"> Sign In</a>
+              <p v-if="loginError">Такого користувача не існує, або пароль не вірний</p>
             </div>
             <div class="forgot">
               <a href="/" id="register-btn"> Home Page</a>
@@ -164,6 +165,21 @@ export default {
         input.setAttribute('autocomplete', 'off');
       });
     },
+    async login() {
+            if (!this.invalidEmail && !this.invalidPassword) {
+                this.response = await userAPI.login(this.user);
+                this.responseRecPass = await userAPI.loginViaRecovery(this.user);
+                if (this.response != null) {
+                    localStorage.token = this.response.token;
+                    this.$router.push('/');
+                } else if (this.responseRecPass != null){
+                    localStorage.token = this.response.token;
+                    this.$router.push('/');
+                } else {
+                    this.showLoginError();
+                }
+            }
+    },
     async createUser() {
       if (!this.invalidNameReg && !this.invalidLastNameReg && !this.invalidEmailReg && !this.invalidPhoneReg && !this.invalidPasswordReg) {
         await userAPI.registration(this.user);
@@ -189,8 +205,17 @@ export default {
     validatePassword() {
       this.invalidPasswordReg = this.user.password.length < 8;
     },
-    isAnyFieldEmpty() {
+    isAnyFieldEmptyReg() {
       return !this.user.email || !this.user.password || !this.user.phoneNumber || !this.user.firstName || !this.user.lastName;
+    },
+    isAnyFieldEmptyLog() {
+            return !this.user.email || !this.user.password;
+    },
+    showLoginError() {
+            this.loginError = true;
+            setTimeout(() => {
+                this.loginError = false;
+            }, 10000);
     },
     startAnimation() {
       console.log("Animation started");
@@ -346,7 +371,6 @@ export default {
   color: rgba(255, 255, 255, 1);
 
 }
-//Login Form Container
 .login-container{
   display: flex;
   flex-direction: column;
@@ -497,7 +521,6 @@ export default {
 .form-login-buttons-links .forgot a{
   color: inherit;
 }
-//CreateAccount
 .register-container{
   position: absolute;
   display: flex;
