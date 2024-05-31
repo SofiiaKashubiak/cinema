@@ -27,12 +27,12 @@
             <div class="input-box-login">
               <input type="email" autocomplete="new-password" placeholder="Please enter email" id="email-login" v-model="user.email" @input="validateEmail">
               <label for="email-login" class="label-email-login">Email</label>
-              <div v-if="invalidEmailReg"> Please enter a valid email address</div>
+              <div v-if="invalidEmailReg" class="error-message"> Please enter a valid email address</div>
             </div>
             <div class="input-box-login">
               <input type="password" autocomplete="new-password" placeholder="Please enter password" id="password-login" v-model="user.password" @input="validatePassword">
               <label for="password-login" class="label-email-password">Password</label>
-              <div v-if="invalidPasswordReg"> Password should be at least 8 characters long</div>
+              <div v-if="invalidPasswordReg" > Password should be at least 8 characters long</div>
             </div>
             <div class="input-box-login">
               <button class="button-sign-in" type="submit" @click="login()" :disabled="invalidEmailReg || invalidPassword || isAnyFieldEmptyLog()">
@@ -264,7 +264,17 @@ export default {
 </script>
 
 <style>
-
+.error-message {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+  }
 .fluid-container {
   position: relative;
   width: 100%;
