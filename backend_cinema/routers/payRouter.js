@@ -7,4 +7,4 @@ router
     .get('/cancel/:sessionId', payController.checkoutCancel)
     .post('/buyTicket', payController.buyTicket);
 
-    module.exports = router;
+module.exports = router;
