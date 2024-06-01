@@ -10,6 +10,12 @@ import recoveryPass from '@/components/authorization/recoveryPassPage.vue';
 import authenticationPage from "@/components/authorization/authenticationPage.vue";
 import sessionPage from "@/components/films/sessionPage.vue";
 import posterPage from "@/components/others/posterPage.vue";
+<<<<<<< Updated upstream
+=======
+import updateMovie from "@/components/films/updateMovie.vue";
+import updateSession from "@/components/films/updateSession.vue";
+import buyTicket from "@/components/films/ticketPage.vue";
+>>>>>>> Stashed changes
 
 const history = createWebHistory();
 const router = createRouter({
@@ -60,6 +66,26 @@ const router = createRouter({
         {
             path: '/posters',
             component: posterPage
+<<<<<<< Updated upstream
+=======
+        },
+        {
+            path: '/updateMovie/:id',
+            component: updateMovie,
+            name: "UpdateMovie",
+            meta: { requiresAdmin: true }
+        },
+        {
+            path: '/updateSession/:id',
+            component: updateSession,
+            name: "UpdateSession",
+            meta: { requiresAdmin: true }
+        },
+        {
+            path: '/:id/buyTicket',
+            component: buyTicket,
+            name: "BuyTicket"
+>>>>>>> Stashed changes
         }
     ]
 })
