@@ -11,6 +11,9 @@
     <router-link :to="{name: 'UpdateSession', params: {id: this.session._id}}" v-if="isAdmin()">
             Update
     </router-link>
+    <router-link :to="{name: 'BuyTicket', params: {id: this.session._id}}">
+            Buy Ticket
+    </router-link>
 </template>
 
 <script>
