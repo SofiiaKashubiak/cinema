@@ -8,6 +8,9 @@
     session discount {{ session.discount }}
     quantityAvailablePlaces {{ session.quantityAvailablePlaces}}
 
+    <router-link :to="{name: 'UpdateSession', params: {id: this.session._id}}" v-if="isAdmin()">
+            Update
+    </router-link>
 </template>
 
 <script>
@@ -26,10 +29,13 @@ methods: {
     async getSession() {
         this.response = await sessionAPI.getSession(this.$route.params.id);
         if (this.response != null){
-            this.session = this.response.session;
-            this.movie = await movieAPI.getMovie(this.response.session.movieId);
+            this.session = this.response;
+            this.movie = await movieAPI.getMovie(this.response.movieId);
         }
     },
+    isAdmin() {
+            return localStorage.getItem("isAdmin")
+        }
 },
 mounted() {
     this.getSession();

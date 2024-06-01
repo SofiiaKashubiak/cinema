@@ -20,10 +20,12 @@
           <ul>
             <li><a href="/">Home page</a></li>
             <li><a href="/authentication">Authentication</a></li>
-            <li><a href="/link3">Cinema Poster</a></li>
-            <li><a href="/link3">My Profile</a></li>
-            <li><a href="/createSession">Create Session</a></li>
-            <li><a href="/createCinema">Create Movie</a></li>
+            <li><a href="/posters">Cinema Poster</a></li>
+            <li v-if="userAccess()"><a href="/profile">My Profile</a></li>
+            <li v-if="userAccess()"><a href="/createSession">Create Session</a></li>
+            <li v-if="userAccess()"><a href="/createMovie">Create Movie</a></li>
+            <li v-if="userAccess()"><a href="/createCinema">Create Cinema</a></li>
+            <li v-if="userAccess()"><a @click="logout()">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -35,14 +37,22 @@
 export default {
   data() {
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      user: [],
     };
   },
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
+    },
+    userAccess() {
+      return localStorage.getItem("isAdmin")
+    },
+    logout() {
+      localStorage.clear();
+      window.location.reload();
     }
-  }
+  },
 };
 </script>
 

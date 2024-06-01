@@ -10,6 +10,8 @@ import recoveryPass from '@/components/authorization/recoveryPassPage.vue';
 import authenticationPage from "@/components/authorization/authenticationPage.vue";
 import sessionPage from "@/components/films/sessionPage.vue";
 import posterPage from "@/components/others/posterPage.vue";
+import updateMovie from "@/components/films/updateMovie.vue";
+import updateSession from "@/components/films/updateSession.vue";
 
 const history = createWebHistory();
 const router = createRouter({
@@ -17,11 +19,13 @@ const router = createRouter({
     routes: [
         {
             path: '/createMovie',
-            component: createMovie
+            component: createMovie,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/createSession',
-            component: createSession
+            component: createSession,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/movie/:id',
@@ -30,11 +34,12 @@ const router = createRouter({
         },
         {
             path: '/authentication',
-            component: authenticationPage
+            component: authenticationPage,
+            name: "auth"
         },
         {
             path: '/',
-            component: mainPage
+            component: mainPage,
         },
         {
             path: '/error',
@@ -42,11 +47,13 @@ const router = createRouter({
         },
         {
             path: '/profile',
-            component: userProfilePage
+            component: userProfilePage,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/createCinema',
-            component: movieSession
+            component: movieSession,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/recovery',
@@ -60,8 +67,33 @@ const router = createRouter({
         {
             path: '/posters',
             component: posterPage
+        },
+        {
+            path: '/updateMovie/:id',
+            component: updateMovie,
+            name: "UpdateMovie",
+            meta: { requiresAdmin: true }
+        },
+        {
+            path: '/updateSession/:id',
+            component: updateSession,
+            name: "UpdateSession",
+            meta: { requiresAdmin: true }
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAdmin)) {
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';
+      if (!isAdmin) {
+        next({ name: 'auth' }); 
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  });
 
 export default router;

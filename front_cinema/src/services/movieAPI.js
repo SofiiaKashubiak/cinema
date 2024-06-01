@@ -30,10 +30,11 @@ export async function getAllMovies() {
     }
 }
 
-export const uploadPhoto = (formData) => {
-    return axios.post(userUrl + 'upload/photo', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    });
-};
+export async function updateMovie(movie, id){
+    try {
+        return await axios.patch(userUrl + "updateMovie/"+id, movie).then(res => res.data);
+    } catch (error) {
+        console.error("Error update user token:", error);
+        await router.push("/error")
+    }
+}

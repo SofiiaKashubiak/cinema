@@ -19,6 +19,9 @@
             {{ ses.date }}
           </router-link>
         </li>
+        <router-link :to="{name: 'UpdateMovie', params: {id: this.movie._id}}" v-if="isAdmin()">
+            Update
+        </router-link>
 </template>
 
 <script>
@@ -57,6 +60,9 @@ export default {
                 this.session = allSessions.filter(session => session.movieId === this.movie._id);
             }
         },
+        isAdmin() {
+            return localStorage.getItem("isAdmin")
+        }
     },
     mounted() {
         this.getMovie();

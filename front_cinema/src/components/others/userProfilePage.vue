@@ -77,7 +77,7 @@ export default {
                 this.password = response.user.password;
             }
         } else {
-            this.$router.push("/login");
+            this.$router.push("/authentication");
         }
     }
 };

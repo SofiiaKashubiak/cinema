@@ -174,9 +174,11 @@ export default {
                 if (this.response != null) {
                     localStorage.token = this.response.token;
                     this.$router.push('/');
+                    localStorage.setItem('isAdmin', 'true');
                 } else if (this.responseRecPass != null){
                     localStorage.token = this.response.token;
                     this.$router.push('/');
+                    localStorage.setItem('isAdmin', 'true');
                 } else {
                     this.showLoginError();
                 }
