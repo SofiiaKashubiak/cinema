@@ -15,5 +15,5 @@ const paymentSchema = new mongoose.Schema({
     }
 });
 
-const Cinema = mongoose.model('Cinema', cinemaSchema);
-module.exports = Cinema;
+const Payment = mongoose.model('Payment', paymentSchema);
+module.exports = Payment;

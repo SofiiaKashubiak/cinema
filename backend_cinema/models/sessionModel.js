@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const sessionSchema = new mongoose.Schema({
     movieId: {
         type: mongoose.Schema.ObjectId,
-        ref: "Group",
+        ref: "Movie",
         required: true
     },
     cinemaId: {
