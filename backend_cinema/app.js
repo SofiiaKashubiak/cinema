@@ -12,11 +12,7 @@ const movieRouter = require("./routers/movieRouter");
 const cinemaRouter = require("./routers/cinemaRouter");
 const userRouter = require("./routers/userRouter");
 const sessionRouter = require("./routers/sessionRouter");
-<<<<<<< Updated upstream
-const ticketRouter = require("./routers/ticketRouter");
-=======
 const payRouter = require("./routers/payRouter");
->>>>>>> Stashed changes
 
 
 const app = express();
@@ -34,11 +30,7 @@ app.use("/movie", movieRouter);
 app.use("/cinema", cinemaRouter);
 app.use("/user", userRouter);
 app.use("/session", sessionRouter);
-<<<<<<< Updated upstream
-app.use("/ticket", ticketRouter);
-=======
 app.use("/pay", payRouter)
->>>>>>> Stashed changes
 
 app.use(errorHandler);
 

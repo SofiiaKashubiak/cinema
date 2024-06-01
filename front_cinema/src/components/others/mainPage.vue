@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img src="@/assets/main_background.png" class="main_background" alt="background">
-    <headerComp/>
+    <div class="main_background" ></div>
+
     <div class="main">
       <div class="main-text-1">
         <a>Cine Virtuoso</a>
@@ -116,17 +116,17 @@
 
     <div class="opening-container">
       <div class="footer-text-8">
-      <a>Opening Hours</a>
-    </div>
-    <ul class="opening-hours">
-      <li>Monday: 10:00 AM - 11:00 PM</li>
-      <li>Tuesday: 10:00 AM - 11:00 PM</li>
-      <li>Wednesday: 10:00 AM - 11:00 PM</li>
-      <li>Thursday: 10:00 AM - 11:00 PM</li>
-      <li>Friday: 10:00 AM - 12:00 AM</li>
-      <li>Saturday: 10:00 AM - 12:00 AM</li>
-      <li>Sunday: 11:00 AM - 10:00 PM</li>
-    </ul>
+        <a>Opening Hours</a>
+      </div>
+      <ul class="opening-hours">
+        <li>Monday: 10:00 AM - 11:00 PM</li>
+        <li>Tuesday: 10:00 AM - 11:00 PM</li>
+        <li>Wednesday: 10:00 AM - 11:00 PM</li>
+        <li>Thursday: 10:00 AM - 11:00 PM</li>
+        <li>Friday: 10:00 AM - 12:00 AM</li>
+        <li>Saturday: 10:00 AM - 12:00 AM</li>
+        <li>Sunday: 11:00 AM - 10:00 PM</li>
+      </ul>
     </div>
 
   </footer>
@@ -135,7 +135,6 @@
 
 
 <script>
-import headerComp from "@/components/pageComponents/headerComp";
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -151,7 +150,6 @@ import {ref} from "vue";
 export default {
   methods: {A11y, Navigation, EffectCoverflow, Scrollbar, Pagination},
   components: {
-    headerComp,
     Swiper,
     SwiperSlide,
   },
@@ -249,7 +247,7 @@ body {
   gap: 0;
   font-family: Cormorant Garamond,serif;
   font-size: 34px;
-  font-weight: 400;
+  font-weight: 1200 !important;
   line-height: 41px;
   text-align: left;
   color: rgba(255, 255, 255, 1);
@@ -310,7 +308,7 @@ body {
   height: 85px;
   font-family: Cormorant SC, serif;
   font-size: 5vw;
-  font-weight: 700;
+  font-weight: 2000 !important;
   line-height: 1;
   text-align: center;
   color: rgba(255, 255, 255, 1);
@@ -324,7 +322,7 @@ body {
   top: 1000px;
   font-family: Cormorant SC, serif;
   font-size: 5vw;
-  font-weight: 700;
+  font-weight: 1000 !important;
   line-height: 1;
   text-align: center;
   color: rgba(255, 255, 255, 1);
@@ -338,7 +336,7 @@ body {
   height: 85px;
   font-family: Cormorant SC, serif;
   font-size: 5vw;
-  font-weight: 700;
+  font-weight: 2000 !important;
   line-height: 1;
   text-align: center;
   color: rgba(255, 255, 255, 1);
@@ -401,6 +399,7 @@ swiper-slide {
   gap: 0;
 }
 .why-us-zone-text {
+  font-weight: 1000 !important;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -520,7 +519,7 @@ swiper-slide {
   gap: 0;
   font-family: Cormorant SC,serif;
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 1000;
   line-height: 41px;
   text-align: left;
   color: rgba(255, 255, 255, 1);

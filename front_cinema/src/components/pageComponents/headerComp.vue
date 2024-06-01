@@ -9,21 +9,26 @@
         <a>Virtuoso</a>
       </div>
       <div class="header-text-3">
-        <a href="/registration">Authentication</a>
+        <a href="/">Home Page</a>
       </div>
-      <img src="@/assets/burger-bar.png" class="burger-bar" id="burger-bar"  @click="toggleSidebar">
+      <img src="@/assets/burger-bar.png" class="burger-bar" id="burger-bar" @click="toggleSidebar">
     </header>
-     <transition name="fade">
+    <transition name="slide-fade">
       <div v-if="isSidebarOpen" class="dropdown-menu">
-        <button class="close-btn" @click="toggleSidebar">✖</button>
-        <ul>
-          <li><a href="/link1">Link 1</a></li>
-          <li><a href="/link2">Link 2</a></li>
-          <li><a href="/link3">Link 3</a></li>
-        </ul>
+        <div class="dropdown_background">
+          <button class="close-btn" @click="toggleSidebar"><i class='bx bx-x'></i></button>
+          <ul>
+            <li><a href="/">Home page</a></li>
+            <li><a href="/authentication">Authentication</a></li>
+            <li><a href="/link3">Cinema Poster</a></li>
+            <li><a href="/link3">My Profile</a></li>
+            <li><a href="/createSession">Create Session</a></li>
+            <li><a href="/createCinema">Create Movie</a></li>
+          </ul>
+        </div>
       </div>
     </transition>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -47,6 +52,7 @@ export default {
   color: inherit;
 }
 header {
+  z-index: 10;
   position: absolute;
   width: 100%;
   top: 0;
@@ -89,8 +95,8 @@ header {
 .header-text-3 {
   position: absolute;
   top: 25px;
-  left: calc(100% - 334px);
-  font-family: Cormorant;
+  left: calc(106% - 390px);
+  font-family: Cormorant SC, serif;
   font-size: 36px;
   font-weight: 600;
   line-height: 43.6px;
@@ -104,17 +110,17 @@ header {
   width: 50px;
   height: 50px;
 }
+
 .dropdown-menu {
   position: fixed;
   top: 0;
   right: 0;
-  width: 400px; /* Adjust width as needed */
-  height: 40vh;
-  background-color: white;
-  border-left: 1px solid #ccc;
+  width: 350px;
+  height: 220px;
+  background-image: url('@/assets/dropdown_background.png');
+  border-bottom-left-radius: 40px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  padding-top: 20px;
   overflow-y: auto;
 }
 
@@ -130,8 +136,8 @@ header {
 
 .dropdown-menu ul {
   list-style: none;
-  padding-top: 65px;
-  padding-left: 0;
+  padding-top: 50px;
+  padding-left: 25px;
   margin: 0;
 }
 
@@ -141,19 +147,45 @@ header {
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: #333;
+  font-family: Cormorant SC, serif;
+  color: #FFFFFF;
+  font-size: 28px;
 }
 
 .dropdown-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: #573C95;
+  border-radius: 40px;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
+.close-btn {
+  position: absolute;
+  color: rgba(255, 255, 255, 1);
+  top: 17px;
+  width: 50px;
+  height: 50px;
+  font-size: 100px;
 }
 
-.fade-enter, .fade-leave-to {
+
+.slide-fade-leave-active {
+  transition: transform 1.5s ease, opacity 1.5s ease;
+}
+.slide-fade-enter-active{
+  transition: transform 1s ease, opacity 1.5s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(-100%);
   opacity: 0;
 }
-</style>
 
+.slide-fade-leave-active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-fade-enter-active {
+  transform: translateY(-100%);
+  opacity: 1;
+}
+</style>
