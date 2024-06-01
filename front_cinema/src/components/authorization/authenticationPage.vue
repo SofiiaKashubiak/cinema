@@ -189,6 +189,7 @@ export default {
       } else {
         this.showRegError();
       }
+    }
     },
     validateName() {
       const namePattern = /^[a-zA-Z'-\s]*$/;
