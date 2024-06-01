@@ -18,11 +18,11 @@ const payRouter = require("./routers/payRouter");
 const app = express();
 
 
-app.use(logger('dev'));
 app.use(express.json());
-// app.use(morgan('dev'));
-app.use(mongo_sanitize());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+// app.use(mongo_sanitize());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 

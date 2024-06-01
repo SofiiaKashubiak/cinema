@@ -9,13 +9,9 @@ import movieSession from '@/components/others/cinemaCreationPage.vue';
 import recoveryPass from '@/components/authorization/recoveryPassPage.vue';
 import authenticationPage from "@/components/authorization/authenticationPage.vue";
 import sessionPage from "@/components/films/sessionPage.vue";
-import posterPage from "@/components/others/posterPage.vue";
-<<<<<<< Updated upstream
-=======
 import updateMovie from "@/components/films/updateMovie.vue";
 import updateSession from "@/components/films/updateSession.vue";
 import buyTicket from "@/components/films/ticketPage.vue";
->>>>>>> Stashed changes
 
 const history = createWebHistory();
 const router = createRouter({
@@ -23,11 +19,13 @@ const router = createRouter({
     routes: [
         {
             path: '/createMovie',
-            component: createMovie
+            component: createMovie,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/createSession',
-            component: createSession
+            component: createSession,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/movie/:id',
@@ -36,11 +34,12 @@ const router = createRouter({
         },
         {
             path: '/authentication',
-            component: authenticationPage
+            component: authenticationPage,
+            name: "auth"
         },
         {
             path: '/',
-            component: mainPage
+            component: mainPage,
         },
         {
             path: '/error',
@@ -48,11 +47,13 @@ const router = createRouter({
         },
         {
             path: '/profile',
-            component: userProfilePage
+            component: userProfilePage,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/createCinema',
-            component: movieSession
+            component: movieSession,
+            meta: { requiresAdmin: true }
         },
         {
             path: '/recovery',
@@ -66,8 +67,6 @@ const router = createRouter({
         {
             path: '/posters',
             component: posterPage
-<<<<<<< Updated upstream
-=======
         },
         {
             path: '/updateMovie/:id',
@@ -85,9 +84,21 @@ const router = createRouter({
             path: '/:id/buyTicket',
             component: buyTicket,
             name: "BuyTicket"
->>>>>>> Stashed changes
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAdmin)) {
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';
+      if (!isAdmin) {
+        next({ name: 'auth' }); 
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  });
 
 export default router;

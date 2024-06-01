@@ -1,5 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const Session = require('../models/sessionModel');
+const Payment = require('../models/paymentModel');
+const Ticket = require('../models/ticketModel');
 const AppError = require("../utils/appError");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -7,7 +9,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 exports.buyTicket = catchAsync(async (req, res, next) => {
     const emailPlace = req.body.emailPlace;
 
-    const session = Session.findById(req.params.sessionId)
+    const session = await Session.findById(req.body.sessionId)
         .populate({
             path: 'movieId',
             select: 'title _id'
@@ -19,10 +21,11 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
 
     if (!session) return next(new AppError("Session don't exist", 401));
 
+    session.price = 100;
     const payment = await Payment.create({
         emailCustomer: req.body.email,
         tickets: [],
-        totalPrice: (session.price - session.price * sessiond.discount / 100) * Object.values(emailPlace).length
+        totalPrice: (session.price - session.price * session.discount / 100) * Object.keys(emailPlace).length
     });
 
     for (var email of Object.keys(emailPlace)) {
@@ -36,13 +39,13 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
     }
 
     const stripeSession = await stripe.checkout.sessions.create({
-        success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/${CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel/${CHECKOUT_SESSION_ID}`,
+        success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/{CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel/{CHECKOUT_SESSION_ID}`,
         payment_method_types: ['card'],
         mode: 'payment',
         metadata: {
-            sessionId: session._id,
-            paymentId: payment._id,
+            sessionId: session._id.toString(),
+            paymentId: payment._id.toString(),
         },
         line_items: [
             {
@@ -51,9 +54,9 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
                     product_data: {
                         name: 'Ticket',
                     },
-                    unit_amount: session.price - session.price * sessiond.discount / 100,
+                    unit_amount: session.price - session.price * session.discount / 100,
                 },
-                quantity: Object.values(emailPlace).length
+                quantity: Object.keys(emailPlace).length
             },
         ],
     });

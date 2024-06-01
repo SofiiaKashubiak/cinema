@@ -174,9 +174,11 @@ export default {
                 if (this.response != null) {
                     localStorage.token = this.response.token;
                     this.$router.push('/');
+                    localStorage.setItem('isAdmin', 'true');
                 } else if (this.responseRecPass != null){
                     localStorage.token = this.response.token;
                     this.$router.push('/');
+                    localStorage.setItem('isAdmin', 'true');
                 } else {
                     this.showLoginError();
                 }
@@ -189,6 +191,7 @@ export default {
       } else {
         this.showRegError();
       }
+    }
     },
     validateName() {
       const namePattern = /^[a-zA-Z'-\s]*$/;
@@ -342,7 +345,6 @@ export default {
   border-radius: 40px;
   opacity: 1;
   overflow: hidden;
-
 }
 .fluid-container{
   position: relative;
@@ -379,7 +381,6 @@ export default {
   line-height: 58px;
   text-align: center;
   color: rgba(255, 255, 255, 1);
-
 }
 .login-container{
   display: flex;

@@ -19,6 +19,8 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
 
 
+
+
 exports.getUserByToken = catchAsync(async (req, res, next) => {
     const token = req.params.token;
 
