@@ -14,7 +14,7 @@ export async function createMovie(data) {
 
 export async function getMovie(id) {
     try {
-        return await axios.get(userUrl + "getMovie/" + id).then(res => res.data.data);
+        return await axios.get(userUrl + "getMovie/" + id).then(res => res.data.data.movie);
     } catch (error) {
         console.error("Error finding movie:", error);
         await router.push("/error");

@@ -9,6 +9,12 @@ import errorPage from '@/components/others/errorPage.vue';
 import userProfilePage from '@/components/others/userProfilePage.vue';
 import movieSession from '@/components/others/cinemaCreationPage.vue';
 import recoveryPass from '@/components/authorization/recoveryPassPage.vue';
+<<<<<<< Updated upstream
+=======
+import authenticationPage from "@/components/authorization/authenticationPage.vue";
+import sessionPage from "@/components/films/sessionPage.vue";
+import posterPage from "@/components/others/posterPage.vue";
+>>>>>>> Stashed changes
 
 const history = createWebHistory();
 const router = createRouter({
@@ -54,6 +60,15 @@ const router = createRouter({
         {
             path: '/recovery',
             component: recoveryPass
+        },
+        {
+            path: '/session/:id',
+            name: "SessionDetails",
+            component: sessionPage
+        },
+        {
+            path: '/posters',
+            component: posterPage
         }
     ]
 })
