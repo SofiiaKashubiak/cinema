@@ -30,7 +30,6 @@ export async function registration(data) {
         return await axios.post(userUrl + "signup", data).then(res => res.data);
     } catch (error) {
         console.error("Error registering user:", error);
-        await router.push("/error");
     }
 }
 

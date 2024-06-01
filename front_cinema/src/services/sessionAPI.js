@@ -25,7 +25,16 @@ export async function getSession(id) {
     try {
         return await axios.get(userUrl + "getSession/" + id).then(res => res.data.data);
     } catch (error) {
-        console.error("Error finding movie:", error);
+        console.error("Error finding session:", error);
+        await router.push("/error");
+    }
+}
+
+export async function getAllSessions() {
+    try {
+        return await axios.get(userUrl + "getAllSessions").then(res => res.data.data.sessions);
+    } catch (error) {
+        console.error("Error finding session:", error);
         await router.push("/error");
     }
 }

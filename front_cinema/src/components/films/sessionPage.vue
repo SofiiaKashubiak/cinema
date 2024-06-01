@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'MovieDetails', params: { id: movie.id }}">
+    <router-link :to="{ name: 'MovieDetails', params: { id: session.movieId }}">
       Movie {{ movie.title }}
     </router-link>
     Session Date {{ session.date }}
@@ -27,7 +27,7 @@ methods: {
         this.response = await sessionAPI.getSession(this.$route.params.id);
         if (this.response != null){
             this.session = this.response.session;
-            this.movie = await movieAPI.getMovie(this.session.movieId);
+            this.movie = await movieAPI.getMovie(this.response.session.movieId);
         }
     },
 },

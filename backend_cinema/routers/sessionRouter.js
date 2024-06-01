@@ -8,5 +8,6 @@ router
     .get("/getSession/:id", sessionController.getSession)
     .post("/deleteSession", sessionController.deleteSession)
     .post("/createSession", sessionController.createSession)
-    .patch("/updateSession/:id", sessionController.updateSession);
+    .patch("/updateSession/:id", sessionController.updateSession)
+    .get("/getAllSessions", sessionController.getAllSessions);
 module.exports = router;

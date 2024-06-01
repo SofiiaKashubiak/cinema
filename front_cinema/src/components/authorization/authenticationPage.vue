@@ -102,6 +102,7 @@
               <button class="button-sign-up" type="submit" @click="createUser()" :disabled="invalidNameReg || invalidLastNameReg || invalidEmailReg || invalidPhoneReg || invalidPasswordReg || isAnyFieldEmptyReg()">
                 <span>Sign Up</span><i class="bx bx-arrow-back"></i>
               </button>
+              <div v-if="registerError" class="error-message-none-user-log">This email already exist</div>
             </div>
           </div>
           <div class="form-register-buttons-links">
@@ -150,6 +151,7 @@ export default {
       invalidEmail: false,
       invalidPassword: false,
       loginError: false,
+      registerError: false,
       showLogin: true,
       showRegister: false,
       isTransitioning: false,
@@ -166,7 +168,7 @@ export default {
       });
     },
     async login() {
-            if (!this.invalidEmail && !this.invalidPasswordReg) {
+            if (!this.invalidEmailReg && !this.invalidPasswordReg) {
                 this.response = await userAPI.login(this.user);
                 this.responseRecPass = await userAPI.loginViaRecovery(this.user);
                 if (this.response != null) {
@@ -182,8 +184,10 @@ export default {
     },
     async createUser() {
       if (!this.invalidNameReg && !this.invalidLastNameReg && !this.invalidEmailReg && !this.invalidPhoneReg && !this.invalidPasswordReg) {
-        await userAPI.registration(this.user);
-        this.$router.push('/');
+        if (await userAPI.registration(this.user)) {
+            this.$router.push('/');
+      } else {
+        this.showRegError();
       }
     },
     validateName() {
@@ -215,6 +219,12 @@ export default {
             this.loginError = true;
             setTimeout(() => {
                 this.loginError = false;
+            }, 10000);
+    },
+    showRegError() {
+            this.registerError = true;
+            setTimeout(() => {
+                this.registerError = false;
             }, 10000);
     },
     startAnimation() {
