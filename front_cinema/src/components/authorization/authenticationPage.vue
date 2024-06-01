@@ -345,7 +345,6 @@ export default {
   border-radius: 40px;
   opacity: 1;
   overflow: hidden;
-
 }
 .fluid-container{
   position: relative;
@@ -382,7 +381,6 @@ export default {
   line-height: 58px;
   text-align: center;
   color: rgba(255, 255, 255, 1);
-
 }
 .login-container{
   display: flex;
