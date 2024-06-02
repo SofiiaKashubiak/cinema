@@ -7,6 +7,7 @@ router
     .get("/getAllMovies", movieController.getMovies)
     .get("/getMovie/:id", movieController.getMovie)
     .post("/createMovie", movieController.createMovie)
+    .delete("/deleteMovie", movieController.deleteMovie)
     .patch("/updateMovie/:id", movieController.updateMovie);
 
 

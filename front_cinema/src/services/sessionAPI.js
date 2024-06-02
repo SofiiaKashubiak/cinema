@@ -47,3 +47,12 @@ export async function updateSession(session, id){
         await router.push("/error")
     }
 }
+
+export async function deleterSession(id) {
+    try {
+        return await axios.delete(userUrl + "deleteSession", id).then(res => res.data);
+    } catch (error) {
+        console.error("Error deleting session:", error);
+        await router.push("/error");
+    }
+}

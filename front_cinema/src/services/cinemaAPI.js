@@ -20,3 +20,12 @@ export async function getAllCinemas() {
         await router.push("/error");
     }
 }
+
+export async function deleterCinema(id) {
+    try {
+        return await axios.delete(userUrl + "deleteCinema", id).then(res => res.data);
+    } catch (error) {
+        console.error("Error deleting cinema:", error);
+        await router.push("/error");
+    }
+}

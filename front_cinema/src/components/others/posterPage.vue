@@ -2,15 +2,14 @@
     <div>
       <ul>
         <li v-for="(movie, index) in response" :key="index">
+          <img :src="movie.photoUrl">
+          <br>
           <router-link :to="{ name: 'MovieDetails', params: {id: movie._id}}">
             {{ movie.title }}
           </router-link>
         </li>
       </ul>
     </div>
-    <div v-for="(movie, index) in response" :key="index">
-            {{ movie.name }}
-        </div>
 </template>
 
 

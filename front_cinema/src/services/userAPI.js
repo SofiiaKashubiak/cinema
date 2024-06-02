@@ -50,7 +50,7 @@ export async function getUserTickets(token){
 
 export async function deleteUser(id) {
     try {
-        return await axios.delete(userUrl + "deleteUser/", id).then(res => res.data);
+        return await axios.delete(userUrl + "deleteUser", id).then(res => res.data);
     } catch (error) {
         console.error("Error deleting user:", error);
         await router.push("/error");
@@ -86,5 +86,14 @@ export async function loginViaRecovery(data) {
         return await axios.post(userUrl + "loginViaReservePassword", data).then(res => res.data);
     } catch (error) {
         console.error("Error logging in:", error);
+    }
+}
+
+export async function getAllUsers() {
+    try {
+        return await axios.get(userUrl + "getAllUsers").then(res => res.data.data.users);
+    } catch (error) {
+        console.error("Error finding users:", error);
+        await router.push("/error");
     }
 }

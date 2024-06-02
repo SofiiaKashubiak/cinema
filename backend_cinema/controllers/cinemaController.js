@@ -47,3 +47,13 @@ exports.getCinema = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+exports.deleteCinema = catchAsync(async (req, res, next) => {
+    const deletedCinema = await Cinema.deleteOne({id: req.body.id});
+    res.status(201).json({
+        status: 'success',
+        data: {
+            deletedCinema
+        }
+    });
+});

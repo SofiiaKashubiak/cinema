@@ -38,3 +38,12 @@ export async function updateMovie(movie, id){
         await router.push("/error")
     }
 }
+
+export async function deleteMovie(id) {
+    try {
+        return await axios.delete(userUrl + "deleteMovie", id).then(res => res.data);
+    } catch (error) {
+        console.error("Error deleting movie:", error);
+        await router.push("/error");
+    }
+}

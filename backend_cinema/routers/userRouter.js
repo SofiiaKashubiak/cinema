@@ -14,7 +14,8 @@ router
     .post('/createReservePassword', authController.createReservePassword)
     .patch('/updateUser', userController.getTokenAsParameter, userController.updateUser)
     .post("/createUser", userController.createUser)
-    .delete('/deleteUser', userController.getTokenAsParameter, userController.deleteUser);
+    .delete('/deleteUser', userController.getTokenAsParameter, userController.deleteUser)
+    .get("/getAllUsers", userController.getAllUsers);
 
 
 module.exports = router;

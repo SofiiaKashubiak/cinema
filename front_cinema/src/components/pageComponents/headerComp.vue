@@ -25,6 +25,7 @@
             <li v-if="userAccess()"><a href="/createSession">Create Session</a></li>
             <li v-if="userAccess()"><a href="/createMovie">Create Movie</a></li>
             <li v-if="userAccess()"><a href="/createCinema">Create Cinema</a></li>
+            <li v-if="userAccess()"><a href="/profile/dashboard">Dashboard</a></li>
             <li v-if="userAccess()"><a @click="logout()">Logout</a></li>
           </ul>
         </div>

@@ -13,6 +13,7 @@ import posterPage from "@/components/others/posterPage.vue";
 import updateMovie from "@/components/films/updateMovie.vue";
 import updateSession from "@/components/films/updateSession.vue";
 import buyTicket from "@/components/films/ticketPage.vue";
+import dashboardPage from "@/components/others/dashboardPage.vue";
 
 const history = createWebHistory();
 const router = createRouter({
@@ -85,6 +86,11 @@ const router = createRouter({
             path: '/:id/buyTicket',
             component: buyTicket,
             name: "BuyTicket"
+        },
+        {
+            path: '/profile/dashboard',
+            component : dashboardPage,
+            meta: { requiresAdmin: true }
         }
     ]
 })

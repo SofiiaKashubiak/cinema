@@ -40,6 +40,16 @@ exports.createMovie = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.deleteMovie = catchAsync(async (req, res, next) => {
+    const deletedMovie = await Movie.deleteOne({id: req.body.id});
+    res.status(201).json({
+        status: 'success',
+        data: {
+            deletedMovie
+        }
+    });
+});
+
 exports.updateMovie = catchAsync(async (req, res, next) => {
     const movie = await Movie.findById(req.params.id);
     movie.title = req.body.title || movie.title;
