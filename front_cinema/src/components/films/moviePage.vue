@@ -14,6 +14,7 @@
         Duration {{ movie.duration }}
         Rating {{ movie.rating }}
         Description {{ movie.description }}
+        <img :src="this.movie.photoUrl">
         <li v-for="(ses, index) in session" :key="index">
             Дата сеансу: <router-link :to="{ name: 'SessionDetails', params: {id: ses._id}}">
             {{ ses.date }}
@@ -32,16 +33,6 @@ export default {
     data () {
         return{
             movie: {
-                title: '',
-                year: 0,
-                genres: [],
-                language: '',
-                trailerLink: '',
-                actors: [],
-                director: '',
-                duration: 0,
-                rating: 0,
-                description: '',
             },
             response: [],
             session: []
@@ -70,6 +61,15 @@ export default {
     },
 
 };
-
 </script>
 
+<style scoped>
+.movie-poster {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

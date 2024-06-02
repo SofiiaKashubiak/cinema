@@ -11,3 +11,12 @@ export async function buyTickets(ticket) {
         await router.push("/error");
     }
 }
+
+export async function getTicketsBySessionId(id) {
+    try {
+        return await axios.get(userUrl + "tickets/" + id).then(res => res.data.data.tickets);
+    } catch (error) {
+        console.error("Error finding session:", error);
+        await router.push("/error");
+    }
+}

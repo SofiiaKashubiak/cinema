@@ -3,7 +3,8 @@ const Session = require('../models/sessionModel');
 const Payment = require('../models/paymentModel');
 const Ticket = require('../models/ticketModel');
 const AppError = require("../utils/appError");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Stripe = require("stripe");
+const stripe = Stripe("sk_test_51PMxLXEMuV0fQOVQT86OzzoR9qs9GimxTY9E8Ecjmxi7aaubjcLQoSnIbxnXR16Huvb6HGDSBRGhFq4QDXCcoN6V00RPoqzksE")
 
 
 exports.buyTicket = catchAsync(async (req, res, next) => {
@@ -90,5 +91,16 @@ exports.checkoutCancel = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: "success",
         message: "Payment canceled"
+    });
+});
+exports.getTicketsBySessionId = catchAsync(async (req, res, next) => {
+    const { sessionId } = req.params;
+    const tickets = await Ticket.find({ sessionId });
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tickets
+        }
     });
 });

@@ -15,7 +15,7 @@
         <div class="login-container" v-show="showLogin && !isAnimating">
           <div class="form-icon">
             <i class="bx bx-log-in-circle icon-1"></i>
-            <i class="bx bx-user-plus icon-2" @click="startAnimation"></i>
+            <i class="bx bx-user-plus icon-2" @click="startAnimation" v-if="userAccess()"></i>
           </div>
           <div class="form-title">
             <span>WELCOME <br> BACK</span>
@@ -42,8 +42,8 @@
             </div>
           </div>
           <div class="form-login-buttons-links">
-            <div class="sign-up">
-              <a href="#" id="register-btn" @click.prevent="startAnimation"> Sign Up</a>
+            <div class="sign-up" >
+              <a href="#" id="register-btn" @click.prevent="startAnimation" v-if="userAccess()"> Sign Up</a>
             </div>
             <div class="forgot">
               <a href="/recovery" id="register-btn"> Forgot Password?</a>
@@ -166,6 +166,9 @@ export default {
       inputFields.forEach(input => {
         input.setAttribute('autocomplete', 'off');
       });
+    },
+    userAccess() {
+      return localStorage.getItem("isAdmin")
     },
     async login() {
             if (!this.invalidEmailReg && !this.invalidPasswordReg) {
