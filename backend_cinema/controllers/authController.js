@@ -66,6 +66,7 @@ exports.loginViaReservePassword = catchAsync(async (req, res, next) => {
 
     const user = await User.findOne({ email : email }).select('+password +reservePassword');
 
+    if (!user.reservePassword) return next(new AppError('There is no reserve password for this user', 401));
     if (!user || !await bcrypt.compare(reservePassword, user.reservePassword)) return next(new AppError('Incorrect email or password', 401));
 
 

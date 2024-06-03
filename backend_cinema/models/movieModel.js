@@ -11,7 +11,7 @@ const movieSchema = new mongoose.Schema({
     },
     genres: [{
         type: String,
-        enum: ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mystery", "Thriller"],
+        enum: ["Action", "Sci-Fi", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mystery", "Thriller", "Western", "Science Fiction", "Crime", "Romance", "Animation", "Family", "War", "History", "Music", "Documentary", "Sport", "Biography", "Musical", "Short", "Film-Noir"],
         required: true
     }],
     language: {

@@ -38,7 +38,6 @@ exports.updateCinema = catchAsync(async (req, res, next) => {
         });
 });
 exports.getCinema = catchAsync(async (req, res, next) => {
-    console.log(req.params.id);
     const cinema = await Cinema.findById(req.params.id);
     res.status(200).json({
         status: 'success',

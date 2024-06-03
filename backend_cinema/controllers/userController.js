@@ -19,8 +19,6 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
 
 
-
-
 exports.getUserByToken = catchAsync(async (req, res, next) => {
     const token = req.params.token;
 
@@ -82,9 +80,8 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-    const token = req.params.token;
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    let user = await User.findByIdAndDelete(decoded.id);
+    const id = req.params.id;
+    let user = await User.findByIdAndDelete(id);
     res.status(201).json({
         status: 'success',
         user

@@ -50,7 +50,7 @@ export async function getUserTickets(token){
 
 export async function deleteUser(id) {
     try {
-        return await axios.delete(userUrl + "deleteUser", id).then(res => res.data);
+        return await axios.delete(userUrl + `deleteUser/${id}`).then(res => res.data);
     } catch (error) {
         console.error("Error deleting user:", error);
         await router.push("/error");
@@ -73,8 +73,11 @@ export async function updateUser(token, user){
 }
 
 export async function createRecoveryPassword(email) {
+    const data = {
+        email: email
+    }
     try {
-        return await axios.post(userUrl + "createReservePassword", email).then(res => res.data);
+        return await axios.post(userUrl + "createReservePassword", data).then(res => res.data);
     } catch (error) {
         console.error("Error creating password:", error);
         await router.push("/error");
