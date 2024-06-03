@@ -48,9 +48,15 @@ export async function getUserTickets(token){
     }
 }
 
-export async function deleteUser(id) {
+export async function deleteUser(id,token) {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    };
+
     try {
-        return await axios.delete(userUrl + `deleteUser/${id}`).then(res => res.data);
+        return await axios.delete(userUrl + `deleteUser/${id}`,config).then(res => res.data);
     } catch (error) {
         console.error("Error deleting user:", error);
         await router.push("/error");
@@ -86,7 +92,7 @@ export async function createRecoveryPassword(email) {
 
 export async function loginViaRecovery(data) {
     try {
-        return await axios.post(userUrl + "loginViaReservePassword", data).then(res => res.data);
+        return await axios.post(userUrl + "loginViaReservePassword", data).then(res => res);
     } catch (error) {
         console.error("Error logging in:", error);
     }

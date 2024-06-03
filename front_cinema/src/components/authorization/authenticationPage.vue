@@ -173,13 +173,14 @@ export default {
     async login() {
             if (!this.invalidEmailReg && !this.invalidPasswordReg) {
                 this.response = await userAPI.login(this.user);
-                this.responseRecPass = await userAPI.loginViaRecovery(this.user);
+                const recoveryUser = {email: this.user.email, reservePassword: this.user.password}
+                this.responseRecPass = await userAPI.loginViaRecovery(recoveryUser);
                 if (this.response != null) {
                     localStorage.token = this.response.token;
                     this.$router.push('/');
                     localStorage.setItem('isAdmin', 'true');
                 } else if (this.responseRecPass != null){
-                    localStorage.token = this.response.token;
+                    localStorage.token = this.responseRecPass.data.token;
                     this.$router.push('/');
                     localStorage.setItem('isAdmin', 'true');
                 } else {

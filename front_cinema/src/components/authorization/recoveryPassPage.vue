@@ -43,6 +43,7 @@ export default {
     methods: {
         async createPassword() {
             userAPI.createRecoveryPassword(this.user.email);
+            this.$router.push("/authentication")
         },
         validateEmail() {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -134,15 +134,19 @@ export default {
   methods: {
     async deleteSession(id) {
       await sessionAPI.deleteSession(id);
+      window.location.reload()
     },
     async deleteUser(id) {
-      await userAPI.deleteUser(id);
+      await userAPI.deleteUser(id,localStorage.getItem("token"));
+      window.location.reload()
     },
     async deleteCinema(id) {
       await cinemaAPI.deleterCinema(id);
+      window.location.reload()
     },
     async deleteMovie(id) {
       await movieAPI.deleteMovie(id);
+      window.location.reload()
     }
   },
   async mounted() {
