@@ -135,6 +135,8 @@ export default {
         },
         validateYear() {
             this.invalidYear = this.movie.year <= 2000 || this.movie.year >= 2025;
+            if(this.movie.year <= 2000) this.movie.year = 2001;
+            if(this.movie.year >= 2025) this.movie.year = 2024;
         },
         validateGenres() {
             this.invalidGenres = this.movie.genres.length === 0 || this.movie.genres.some(genre => !genre.trim());
@@ -144,6 +146,7 @@ export default {
         },
         validateDuration() {
             this.invalidDuration = this.movie.duration <= 0;
+            if(this.movie.duration <= 0) this.movie.duration = 1;
         },
         validateRating() {
             this.invalidRating = this.movie.rating < 0 || this.movie.rating > 10;

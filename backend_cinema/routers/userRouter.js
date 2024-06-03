@@ -6,6 +6,7 @@ const router = express.Router();
 
 
 router
+    .get("/getAllUsers", userController.getAllUsers)
     .get('/getUserByToken', userController.getTokenAsParameter, userController.getUserByToken)
     .get('/getUserTickets', userController.getTokenAsParameter, userController.getUserTickets)
     .post('/signup', authController.signup)
@@ -14,8 +15,8 @@ router
     .post('/createReservePassword', authController.createReservePassword)
     .patch('/updateUser', userController.getTokenAsParameter, userController.updateUser)
     .post("/createUser", userController.createUser)
-    .delete('/deleteUser', userController.getTokenAsParameter, userController.deleteUser)
-    .get("/getAllUsers", userController.getAllUsers);
+    .delete('/deleteUser/:id', userController.getTokenAsParameter, userController.deleteUser)
+
 
 
 module.exports = router;
