@@ -1,59 +1,94 @@
 <template>
-    <form @submit.prevent="updateMovie">
-        Title
-        <input type="text" v-model="movie.title" @input="isAnyFieldEmpty" required>
-
-        Year
-        <input type="number" v-model="movie.year" @input="validateYear" required>
-        <div v-if="invalidYear" >Year must be a valid number from 2001 to 2024</div>
-        
-        Genre
-        <div v-for="(genre, index) in movie.genres" :key="index">
-            <select v-model="movie.genres[index]" required>
-                <option v-for="option in genreOption" :key="option" :value="option">
+  <div class="create_movie_background"></div>
+  <div class="parent-container-2">
+    <div class="upload_image_container">
+      <img src="@/assets/upload_photo_image.png" class="upload_photo">
+    </div>
+    <div class="create_movie-container">
+      <div class="movie_container">
+        <div class="form-title-movie">
+          <span>CREATE MOVIE</span>
+        </div>
+        <div class="movie-form">
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-photo" id="photo_movie" v-model="movie.photoUrl" @input="isAnyFieldEmpty" required>
+            <label for="photo_movie" class="label-photo-movie">Upload Photo</label>
+          </div>
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-title" id="title_movie" v-model="movie.title" @input="isAnyFieldEmpty" required>
+            <label for="title_movie" class="label-title-movie">Title</label>
+          </div>
+          <div class="input-box-login">
+            <input type="number"  id="year_movie" v-model="movie.year" @input="validateYear" required>
+            <label for="year_movie" class="label-year-movie">Year</label>
+            <div v-if="invalidYear" class="error-message-year-movie">Year must be a valid number from 2001 to 2024</div>
+          </div>
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-description" id="description_movie" v-model="movie.description" @input="isAnyFieldEmpty" required>
+            <label for="description_movie" class="label-description-movie">Description</label>
+          </div>
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-language" id="language_movie" v-model="movie.language" @input="isAnyFieldEmpty" required>
+            <label for="language_movie" class="label-language-movie">Language</label>
+          </div>
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-director" id="director_movie" v-model="movie.director" @input="isAnyFieldEmpty" required>
+            <label for="director_movie" class="label-director-movie">Director</label>
+          </div>
+          <div class="input-box-login">
+            <input type="number" autocomplete="new-duration" id="duration_movie" v-model="movie.duration" @input="validateDuration" required>
+            <label for="duration_movie" class="label-duration-movie">Duration</label>
+            <div v-if="invalidDuration" class="error-message-duration-movie">Duration must be a valid number</div>
+          </div>
+          <div class="input-box-login">
+            <input type="text" autocomplete="new-link-trailer" id="link_trailer_movie" v-model="movie.trailerLink" @input="isAnyFieldEmpty" required>
+            <label for="link_trailer_movie" class="label-link_trailer_movie">Trailer Link</label>
+          </div>
+          <div class="input-box-login">
+            <input type="number" autocomplete="new-rating" id="rating_movie" v-model="movie.rating" @input="validateRating" required>
+            <label for="rating_movie" class="label-rating_movie">Rating</label>
+            <div v-if="invalidRating" class="error-message-rating-movie">Rating must be a valid number</div>
+          </div>
+          <div class="input-box-login">
+            <label for="genre-movie" class="label-genre_movie">Genre</label>
+            <div class="genre-movie-container">
+              <div v-for="(genre, index) in movie.genres" :key="index" class="genre-select-container">
+                <select v-model="movie.genres[index]" required class="genre-select">
+                  <option v-for="option in genreOption" :key="option" :value="option">
                     {{ option }}
-                </option>
-            </select>
-            <button type="button" @click="removeGenre(index)">Remove</button>
+                  </option>
+                </select>
+              </div>
+            </div>
+            <button class="button-remove-genre" type="button" @click="removeGenre(index)">
+              <span>Remove</span>
+            </button>
+            <button type="button" class="button-add-genre" @click="addGenre">
+              <span>Add Genre</span>
+            </button>
+            <div v-if="invalidGenres" class="error-message-genre-movie" >At least one genre is required</div>
+          </div>
+          <div class="input-box-login">
+            <label for="actors-movie" class="label-actors_movie">Actors</label>
+            <div class="actors-movie-container">
+              <div v-for="(actor, index) in movie.actors" :key="index" >
+                <input type="text" class="actor-input-container" v-model="movie.actors[index]" @input="validateActors" required />
+                <button type="button" class="button-remove-actor" @click="removeActor(index)">Remove</button>
+              </div>
+            </div>
+            <button type="button" class="button-add-actor" @click="addActor">Add Actor</button>
+            <div v-if="invalidActors" class="error-message-actor-movie">At least one actor is required</div>
+          </div>
+          <div class="input-box-profile">
+            <button @click="updateMovie()" class="button-create-movie" type="submit" :disabled="invalidYear || invalidActors || invalidGenres || invalidDuration || invalidRating || isAnyFieldEmpty()">
+              <span>Update Movie</span><i class="bx bx-arrow-back"></i>
+            </button>
+            <div v-if="isAnyFieldEmpty()" class="error-message-fields-create-movie">Do not leave fields blank</div>
+          </div>
         </div>
-        <button type="button" @click="addGenre">Add Genre</button>
-        <div v-if="invalidGenres" >At least one genre is required</div>
-        
-        Language
-        <input type="text" v-model="movie.language" @input="isAnyFieldEmpty()" required>
-
-        Trailer Link
-        <input type="text" v-model="movie.trailerLink" @input="isAnyFieldEmpty()" required>
-
-        Actors
-        <div v-for="(actor, index) in movie.actors" :key="index">
-            <input type="text" v-model="movie.actors[index]" @input="validateActors" required />
-            <button type="button" @click="removeActor(index)">Remove</button>
-        </div>
-        <button type="button" @click="addActor">Add Actor</button>
-        <div v-if="invalidActors" >At least one actor is required</div>
-        
-        Director
-        <input type="text" v-model="movie.director" @input="isAnyFieldEmpty" required>
-
-        Duration
-        <input type="number" v-model="movie.duration" @input="validateDuration" required>
-        <div v-if="invalidDuration" >Duration must be a valid number</div>
-        
-        Rating
-        <input type="number" v-model="movie.rating" @input="validateRating" required>
-        <div v-if="invalidRating" >Rating must be a valid number</div>
-        
-        Description
-        <input type="text" v-model="movie.description" @input="isAnyFieldEmpty" required>
-
-        Photo
-        <input type="text" v-model="movie.photoUrl" @input="isAnyFieldEmpty" required>
-
-        <button type="submit" :disabled="invalidYear || invalidActors || invalidGenres ||
-                   invalidDuration || invalidRating || isAnyFieldEmpty()">Let's Go</button>
-        <div v-if="isAnyFieldEmpty()">Do not leave fields blank</div>
-    </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
