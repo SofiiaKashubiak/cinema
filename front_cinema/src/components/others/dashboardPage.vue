@@ -169,7 +169,7 @@ export default {
 .table-container {
   width: 100%;
   max-width: 1400px;
-  margin: 60px;
+  margin: 50px;
   border-radius: 50px;
   padding: 10px;
   color: #fff;
