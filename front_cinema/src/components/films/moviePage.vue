@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .movie-poster {
   max-width: 100%;
   height: auto;
