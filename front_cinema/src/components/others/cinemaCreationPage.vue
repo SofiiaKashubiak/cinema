@@ -24,7 +24,7 @@
             <label for="amount_rows_cinema" class="label-amount-rows-cinema">Amount of seats in a row</label>
           </div>
           <div class="input-box-login">
-            <button type="submit" class="button-create-cinema"@click="createCinema" :disabled="isAnyFieldEmpty()">
+            <button type="submit" class="button-create-cinema" @click="createCinema" :disabled="isAnyFieldEmpty()">
               <span>Create Cinema</span><i class="bx bx-arrow-back"></i>
             </button>
             <div v-if="isAnyFieldEmpty()" class="error-message-fields-create-cinema">Do not leave fields blank</div>
