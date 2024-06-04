@@ -11,7 +11,7 @@
       </div>
       <img src="@/assets/UFO-1.png" class="UFO-1" alt="UFO">
       <img src="@/assets/popcorn.png" class="popcorn-1" alt="popcorn">
-      <button onclick="window.location.href='/registration'" class="join_now_button">
+      <button onclick="window.location.href='/posters'" class="join_now_button">
         <span class="join-now-text-button">join us right now →</span>
       </button>
     </div>
@@ -45,13 +45,6 @@
           allowMouseEvents="true"
 
       >
-        <!-- <swiper-slide><img src="@/assets/slide1.jpeg" alt="Slide 1"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide2.webp" alt="Slide 2"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide3.jpeg" alt="Slide 3"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide4.jpeg" alt="Slide 4"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide5.jpeg" alt="Slide 5"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide6.jpeg" alt="Slide 6"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide7.jpeg" alt="Slide 6"></swiper-slide> -->
         <swiper-slide v-for="movie in movies" :key="movie.id">
           <router-link :to="{ name: 'MovieDetails', params: {id: movie._id}}">
             <img :src="movie.photoUrl" :alt="`Slide ${movie.id}`">
