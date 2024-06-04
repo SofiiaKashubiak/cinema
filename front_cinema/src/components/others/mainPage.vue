@@ -363,8 +363,10 @@ swiper {
   width: 100vw;
   height: 100%;
   background-color: #000115;
+  margin-top: 40px;
 }
 swiper-slide {
+  padding-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -373,7 +375,7 @@ swiper-slide {
 .swiper-slide img {
   width: 100%;
   height: auto;
-  max-width: 300px;
+  max-width: 400px;
   border-radius: 15px;
   transition: transform 0.3s, filter 0.3s;
 }
