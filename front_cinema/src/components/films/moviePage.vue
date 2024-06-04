@@ -178,9 +178,9 @@ export default {
   width: 331.76px;
   height: 43.96px;
   top: 85px;
-  padding-left: 190px;
+  left: 210px;
   gap: 0px;
-  position: relative;
+  position: fixed;
   font-family: Cormorant;
   font-size: 30px;
   font-weight: 700;
@@ -330,7 +330,7 @@ export default {
   width: 200px;
   height: 36px;
   position: relative;
-  top: 50px; !important;
+  top: 242px !important;
   left: 242px;
   gap: 0px;
   opacity: 0px;
