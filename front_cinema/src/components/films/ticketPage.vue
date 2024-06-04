@@ -18,6 +18,7 @@
         </div>
         <p v-if="invalidEmail" class="error_message">Please enter a valid email address</p>
         <p v-if="exceedsAvailableSeats" class="error_message">Not enough available seats</p>
+        <p class="non-ticket">Tickets are non-exchangeable and non-refundable</p>
         <div class="button_container">
           <button type="submit" :disabled="emailExists || invalidEmail || exceedsAvailableSeats || placeAlreadyBooked || isAnyFieldEmpty()" class="submit_button">Add Ticket</button>
           <button @click="buyTicket" :disabled="isEmailPlaceEmpty()" class="submit_button">Buy Tickets</button>
@@ -128,6 +129,7 @@ export default {
   }
 };
 </script>
+
 <style>
 .session_background {
   display: flex;
@@ -160,7 +162,12 @@ export default {
   align-items: center;
   gap: 15px;
 }
-
+.error_message {
+  color: white;
+  position: fixed;
+  font-size: 14px;
+  top: 250px;
+}
 .form_group {
   width: 100%;
   text-align: left;
@@ -186,11 +193,12 @@ export default {
   color: white;
 }
 
-.error_message {
-  color: white;
+.non-ticket {
+  color: rgba(235, 210, 168, 1);
   position: fixed;
-  font-size: 14px;
-  top: 260px;
+  font-size: 18px;
+  font-weight: 600;
+  top: 270px;
 }
 
 .button_container {
@@ -230,16 +238,18 @@ export default {
   font-family: Cormorant Garamond;
   font-size: 18px;
   line-height: 34.5px;
-  text-align: left;
-
+  text-align: center;
+  max-width: 500px;
+  max-height: 100px;
+  overflow-y: auto;
 }
-h3{
+
+h3 {
   font-family: Cormorant Garamond;
   font-size: 20px;
   font-weight: 800;
   line-height: 54.5px;
   text-align: center;
-
 }
 
 .seats_display span {

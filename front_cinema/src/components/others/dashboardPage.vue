@@ -1,7 +1,7 @@
 <template>
   <div class="parent-container-5">
     <div class="table-container">
-      <h2>Cinemas</h2>
+      <h4>Cinemas</h4>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -25,7 +25,7 @@
         </table>
       </div>
 
-      <h2>Movies</h2>
+      <h4>Movies</h4>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -50,7 +50,7 @@
         </table>
       </div>
 
-      <h2>Sessions</h2>
+      <h4>Sessions</h4>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -85,7 +85,7 @@
         </table>
       </div>
 
-      <h2>Users</h2>
+      <h4>Users</h4>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -180,7 +180,7 @@ export default {
   font-family: 'Cormorant Garamond', serif;
 }
 
-.table-container h2 {
+.table-container h4 {
   margin-bottom: 20px;
   font-family: Cormorant SC;
   font-size: 64px;
