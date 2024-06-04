@@ -1,8 +1,8 @@
 <template>
   <div class="create_movie_background"></div>
   <div class="parent-container-2">
-    <div class="upload_image_container">
-      <img src="@/assets/upload_photo_image.png" class="upload_photo">
+    <div class="upload_image_container_page">
+      <img src="@/assets/upload_photo_image.png" class="upload_photo_page">
     </div>
     <div class="create_movie-container">
       <div class="movie_container">
