@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const Session = require("../models/sessionModel");
 const Movie = require("../models/movieModel");
+const AppError = require("../utils/appError");
 
 
 exports.getSession = catchAsync(async (req, res, next) => {
@@ -27,6 +28,8 @@ exports.getAllSessions = catchAsync(async (req, res, next) => {
 });
 
 exports.createSession = catchAsync(async (req, res, next) => {
+    const createdSession = await Session.find({movieId: req.body.movieId});
+    if(createdSession) return new AppError('Session for this movie already exists', 400);
     const newSession = await Session.create(req.body);
     res.status(201).json({
         status: 'success',

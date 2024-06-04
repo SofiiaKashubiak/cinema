@@ -3,11 +3,11 @@
     <div class="form_container">
       <form @submit.prevent="addTicket" class="ticket_form">
         <div class="form_group">
-          <label for="email">Email:</label>
+          <label for="email">Payer's Email:</label>
           <input type="email" v-model="ticketData.email" @input="validateEmail(ticketData.email)" required>
         </div>
         <div class="form_group">
-          <label for="emailPlace">Payer's Email:</label>
+          <label for="emailPlace">Receiver's Email:</label>
           <input type="email" v-model="newEmailPlace.email" required @change="emailCheck" @input="validateEmail(newEmailPlace.email)">
           <p v-if="emailExists" class="error_message">This email already exists</p>
         </div>
@@ -28,7 +28,7 @@
           Payer's Email: {{ email }}, Place: {{ place }}
         </li>
       </ul>
-      <h3>Available Seats (White available, Grey unavailable)</h3>
+      <h3>Available Seats</h3>
       <div class="seats_display">
         <span v-for="seat in totalSeats" :key="seat" :class="{ available: !isBooked(seat), unavailable: isBooked(seat) }">
           {{ seat }}
@@ -73,22 +73,28 @@ export default {
         this.updateSeats();
       }
     },
+
     checkPlace() {
       this.placeAlreadyBooked = this.isBooked(this.newEmailPlace.place) || Object.values(this.ticketData.emailPlace).includes(this.newEmailPlace.place);
     },
+
     isEmailPlaceEmpty() {
       return Object.keys(this.ticketData.emailPlace).length === 0;
     },
+
     validateEmail(email) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.invalidEmail = !emailPattern.test(email);
     },
+
     emailCheck() {
       this.emailExists = Object.prototype.hasOwnProperty.call(this.ticketData.emailPlace, this.newEmailPlace.email);
     },
+
     isAnyFieldEmpty() {
       return !this.ticketData.email || !this.ticketData.sessionId || !this.newEmailPlace.email || !this.newEmailPlace.place;
     },
+
     async buyTicket() {
       if (!this.emailExists && !this.exceedsAvailableSeats && !this.placeAlreadyBooked && !this.isEmailPlaceEmpty()) {
         await buyTickets(this.ticketData.email, this.ticketData.sessionId, this.ticketData.emailPlace);
@@ -99,15 +105,18 @@ export default {
       this.tickets = await ticketAPI.getTicketsBySessionId(this.$route.params.id);
       this.updateSeats();
     },
+
     async getSession() {
       this.session = await sessionAPI.getSession(this.$route.params.id);
       this.updateSeats();
     },
+
     updateSeats() {
       const bookedSeats = this.tickets.map(ticket => ticket.place);
       const availableSeats = Array.from({ length: this.session.quantityAvailablePlaces }, (_, i) => i + 1);
-      this.totalSeats = availableSeats.filter(seat => !bookedSeats.includes(seat)).concat(bookedSeats);
+      this.totalSeats = availableSeats.filter(seat => !bookedSeats.includes(seat));
     },
+
     isBooked(seat) {
       return this.tickets.some(ticket => ticket.place === seat);
     }
