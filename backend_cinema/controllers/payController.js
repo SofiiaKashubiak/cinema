@@ -62,6 +62,8 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
         ],
     });
 
+    console.log(stripeSession.id);
+
     res.status(200).json({
         status: "success",
         stripeSession

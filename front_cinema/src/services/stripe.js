@@ -17,10 +17,12 @@ export const buyTickets = async (email, sessionId, emailPlace) => {
         sessionId: sessionId,
         emailPlace: emailPlace
     }
-    const id = await axios.post(payUrl, data).then(res => res.data);
-    console.log(id);
+
+    const session = await axios.post(payUrl, data).then(res => res.data.stripeSession);
+    console.log(session.id);
+    console.log("Code work")
 
     await stripePromise.redirectToCheckout({
-        sessionId: id
+        sessionId: session.id
     });
 };

@@ -91,9 +91,10 @@ export default {
     },
     async buyTicket() {
       if (!this.emailExists && !this.exceedsAvailableSeats && !this.placeAlreadyBooked && !this.isEmailPlaceEmpty()) {
-        alert(await await buyTickets(this.ticketData.email, this.ticketData.sessionId, this.ticketData.emailPlace));
+        await buyTickets(this.ticketData.email, this.ticketData.sessionId, this.ticketData.emailPlace);
       }
     },
+
     async getTicketsBySessionId() {
       this.tickets = await ticketAPI.getTicketsBySessionId(this.$route.params.id);
       this.updateSeats();
