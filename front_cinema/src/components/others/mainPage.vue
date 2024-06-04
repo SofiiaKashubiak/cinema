@@ -45,13 +45,18 @@
           allowMouseEvents="true"
 
       >
-        <swiper-slide><img src="@/assets/slide1.jpeg" alt="Slide 1"></swiper-slide>
+        <!-- <swiper-slide><img src="@/assets/slide1.jpeg" alt="Slide 1"></swiper-slide>
         <swiper-slide><img src="@/assets/slide2.webp" alt="Slide 2"></swiper-slide>
         <swiper-slide><img src="@/assets/slide3.jpeg" alt="Slide 3"></swiper-slide>
         <swiper-slide><img src="@/assets/slide4.jpeg" alt="Slide 4"></swiper-slide>
         <swiper-slide><img src="@/assets/slide5.jpeg" alt="Slide 5"></swiper-slide>
         <swiper-slide><img src="@/assets/slide6.jpeg" alt="Slide 6"></swiper-slide>
-        <swiper-slide><img src="@/assets/slide7.jpeg" alt="Slide 6"></swiper-slide>
+        <swiper-slide><img src="@/assets/slide7.jpeg" alt="Slide 6"></swiper-slide> -->
+        <swiper-slide v-for="movie in movies" :key="movie.id">
+          <router-link :to="{ name: 'MovieDetails', params: {id: movie._id}}">
+            <img :src="movie.photoUrl" :alt="`Slide ${movie.id}`">
+          </router-link>
+        </swiper-slide>
       </swiper>
     </div>
   </div>
@@ -146,6 +151,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 
 import {ref} from "vue";
+import * as movieAPI from "@/services/movieAPI";
 
 export default {
   methods: {A11y, Navigation, EffectCoverflow, Scrollbar, Pagination},
@@ -186,9 +192,11 @@ export default {
         mousewheel: true,
         keyboard: true,
       },
+      movies : [],
     };
   },
-  mounted() {
+  async mounted() {
+    this.movies = await movieAPI.getAllMovies();
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') {
         this.handleLeftArrow();

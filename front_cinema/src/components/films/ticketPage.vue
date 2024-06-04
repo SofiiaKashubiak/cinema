@@ -90,7 +90,7 @@ export default {
     },
     async buyTicket() {
       if (!this.emailExists && !this.exceedsAvailableSeats && !this.placeAlreadyBooked && !this.isEmailPlaceEmpty()) {
-        alert(await ticketAPI.buyTickets(this.ticketData));
+        await ticketAPI.buyTickets(this.ticketData);
       }
     },
     async getTicketsBySessionId() {

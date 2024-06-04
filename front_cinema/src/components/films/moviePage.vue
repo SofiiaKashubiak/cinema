@@ -90,7 +90,7 @@ export default {
       return new Date(dateString).toLocaleDateString('en-GB', options);
     }
   },
-  mounted() {
+  created() {
     this.getMovie();
     this.getAllSession();
   }
