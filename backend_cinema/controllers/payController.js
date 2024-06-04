@@ -4,7 +4,7 @@ const Payment = require('../models/paymentModel');
 const Ticket = require('../models/ticketModel');
 const AppError = require("../utils/appError");
 const Stripe = require("stripe");
-const stripe = Stripe("sk_test_51PMxLXEMuV0fQOVQT86OzzoR9qs9GimxTY9E8Ecjmxi7aaubjcLQoSnIbxnXR16Huvb6HGDSBRGhFq4QDXCcoN6V00RPoqzksE")
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 exports.buyTicket = catchAsync(async (req, res, next) => {
@@ -40,8 +40,8 @@ exports.buyTicket = catchAsync(async (req, res, next) => {
     }
 
     const stripeSession = await stripe.checkout.sessions.create({
-        success_url: `${process.env.SERVER_URL}:${process.env.PORT}/success/{CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/cancel/{CHECKOUT_SESSION_ID}`,
+        success_url: `${process.env.SERVER_URL}:${process.env.PORT}/pay/success/{CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.SERVER_URL}:${process.env.PORT}/pay/cancel/{CHECKOUT_SESSION_ID}`,
         payment_method_types: ['card'],
         mode: 'payment',
         metadata: {
