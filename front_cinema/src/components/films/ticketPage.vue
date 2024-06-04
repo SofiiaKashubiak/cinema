@@ -41,6 +41,7 @@
 <script>
 import * as ticketAPI from '@/services/ticketAPI';
 import * as sessionAPI from '@/services/sessionAPI';
+import { buyTickets } from '@/services/stripe';
 
 export default {
   data() {
@@ -90,7 +91,7 @@ export default {
     },
     async buyTicket() {
       if (!this.emailExists && !this.exceedsAvailableSeats && !this.placeAlreadyBooked && !this.isEmailPlaceEmpty()) {
-        alert(await ticketAPI.buyTickets(this.ticketData));
+        alert(await await buyTickets(this.ticketData.email, this.ticketData.sessionId, this.ticketData.emailPlace));
       }
     },
     async getTicketsBySessionId() {

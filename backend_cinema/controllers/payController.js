@@ -76,10 +76,7 @@ exports.checkoutSuccess = catchAsync(async (req, res, next) => {
     payment.isPaid = true;
     await payment.save();
 
-    res.status(200).json({
-        status: "success",
-        message: "Payment successful"
-    });
+    res.redirect(`${process.env.CLIENT_URL}`);
 });
 
 
@@ -93,6 +90,9 @@ exports.checkoutCancel = catchAsync(async (req, res, next) => {
         message: "Payment canceled"
     });
 });
+
+
+
 exports.getTicketsBySessionId = catchAsync(async (req, res, next) => {
     const { sessionId } = req.params;
     const tickets = await Ticket.find({ sessionId });
